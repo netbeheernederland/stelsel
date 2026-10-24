@@ -2,23 +2,9 @@ id: https://modellen.netbeheernederland.nl/stelsel/registers/energie-uitwisselin
 name: energie-uitwisselingsregister
 title: Energie-uitwisselingsregister
 version: 1.4-draft
-description: Het energie-uitwisselingsregister bevat de uitgewisselde energie zoals vastgesteld door een energieleverancier, meetverantwoordelijke partij of netbeheerder (systeembeheerder).
+description: Het energie-uitwisselingsregister bevat de met een energienet uitgewisselde energie zoals formeel vastgesteld.
 comments:
-  - Dit register beschrijft de vastgestelde energie-uitwisseling, geschikt om te worden toegewezen/toegerekend aan partijen in de energiemarkt. De meterstanden in dit register betreffen uitsluitend officieel *vastgestelde* standen.
-  - "Vanwege de verschillende doelen die ze dienen, onderscheiden we energie-uitwisselingen naar resolutiecategorieën 'interval' (met hoge resolutie, ook wel bekend als 'telemetrie') en 'periodiek' (met lage resolutie)."
-  - |
-    Voor de berekening en communicatie van verbruiksafhankelijke transportkosten voor grootverbruikers zijn relevant:
-    
-    - [Meterstand](#Meterstand) (onder aanname dat dit op de factuur vermeld moet worden)
-    - [Uitgewisseld volume](#Uitgewisseld-volume)
-    - [Restvolume](#Restvolume) (onder aanname dat ook dit een wegingsfactor kent)
-    - [Piekbelasting](#Piekbelasting)
-
-    Voor kleinverbruikers zijn daarnaast relevant:
-
-    - [Standaardjaarvolume](#Standaardjaarvolume)
-    - [Dynamische profielfractie elektriciteit](#Dynamische profielfractie elektriciteit)
-    - [Standaard profielfractie elektriciteit](#Standaard profielfractie elektriciteit)
+  - Vanwege de verschillende doelen die ze dienen, onderscheiden we energie-uitwisselingen naar de resolutiecategorieën `interval` (met hoge resolutie) en `periodiek` (met lage resolutie).
 see_also:
   - iceg:g=2025-01-01
   - rge:#
@@ -38,6 +24,7 @@ prefixes:
   mcg: https://wetten.overheid.nl/jci1.3:c:BWBR0037925&
   nce: https://wetten.overheid.nl/jci1.3:c:BWBR0037940&
   rge: https://www.internetconsultatie.nl/regeling_gegevensuitwisseling_energiewet/b1
+  rgvo: https://wetten.overheid.nl/jci1.3:c:BWBR0035971&
 default_prefix: this
 imports:
   - ../../basiswaardesoorten
@@ -48,16 +35,19 @@ annotations:
     - `Jaarverbruik telemetrieverbruikers` toegevoegd.
     - `profielcategorie` bij gas --> `aansluitingcategorie` (nieuwe regelgeving).
     - `profielcategorie` bij elektriciteit --> `profielcategoriecode` (nieuwe regelgeving, vormt samen met `vastgesteld afnametype` de profielcategorie).
-    - `Allocatiepunt bij aansluiting` vervangen door `Allocatiepunt` (zodat naast aansluitingen ook netgebieden meedoen).
+    - `Allocatiepunt bij aansluiting` vervangen door `Allocatiepunt` (zodat naast aansluitingen ook systeemgebieden meedoen).
     - `Tellerstand` --> `Meterstand` (voorkeursterm in regelgeving).
-    - `Meterstand` onderscheiden naar groot en klein, met een relatie naar het meetinrichtingenregister.
     - `gereconcilieerd` verwijderd (hoort thuis in het reconciliatieproces).
     - `kWmax` --> `Piekbelasting` (energiedrageragnostische terminologie)
     - `resolutie` toegevoegd aan `Uitgewisseld volume` (ontbrak), daarom tevens `interval` op `Piekbelasting` gewijzigd naar `resolutie`.
     - ISO 3610-tijdlijnen correct toegepast (geen `tijdlijn geldigheid` bij gebeurtenissen).
-    - `Uitgewisseld volume` relateert niet langer aan GCvO-installatie (publiceren we niet als zodanig).
-    - `eindmoment` is deel van de identificatie bij gebeurtenissen die elkaar in principe kunnen overlappen (`Uitgewisseld volume`, `Restvolume`, `Piekbelasting`, `Verwachte opwekking`, `Opgewekt volume`).
+    - `Uitgewisseld volume` relateert niet langer aan GvO-installatie (was een vergissing).
+    - `eindmoment` is deel van de identificatie bij gebeurtenissen die elkaar in principe kunnen overlappen (`Uitgewisseld volume`, `Restvolume`, `Piekbelasting`, `Verwachte opwekking`, `Duurzaam opgewekt volume`).
     - `bepalingsmethode` toegevoegd aan dynamische profielfracties.
+    - `Verwachte opwekking` verwijderd (moet worden gezien als een verzoek aan het register, niet een uit te leveren registergegeven).
+    - `Opgewekt volume` --> `Duurzaam opgewekt volume` (geeft de betekenis beter weer).
+    - `vastgesteld door` verwijderd (is slechts intern relevant voor traceerbaarheid).
+    - `eenheid` vervangen door `meetsoort` (voor een meer expliciete betekenis).
 
 classes:
   Actuele temperatuurcoëfficiënt:
@@ -79,7 +69,7 @@ classes:
     class_uri: Calorische-omrekenfactor
     related_mappings:
       - begrip:tibcm #energie-uitwisseling
-    description: maandgemiddelde correctiefactor die de hoeveelheid verbruikt gas (in m3) omzet naar energie (m3(n;35;17)), op basis van de calorische waarde van het gas in een specifiek netgebied
+    description: maandgemiddelde correctiefactor die de hoeveelheid verbruikt gas (in m3) omzet naar energie (m3(n;35;17)), op basis van de calorische waarde van het gas in een specifiek systeemgebied
     annotations:
       tijdlijn_registratie: true
     slots:
@@ -89,7 +79,7 @@ classes:
     attributes:
       # relaties:
       per:
-        range: Netgebied
+        range: Systeemgebied
         required: true
         multivalued: false
         annotations:
@@ -115,6 +105,10 @@ classes:
         description: door de wederpartij aangedragen vervangende meterstandwaarde
         range: Decimaal getal
         required: true
+      identificatie:
+        description: unieke aanduiding waarmee iets binnen een gegeven context ondubbelzinnig herkenbaar is
+        range: Code
+        required: true
       referentie:
         description: kenmerk van het dispuut bij de wederpartij
         range: Code
@@ -137,15 +131,43 @@ classes:
         required: true
         multivalued: false
         annotations:
-          inverse_cardinality: "0..1"
+          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
-          - over
+          - identificatie
+  Duurzaam opgewekt volume:
+    class_uri: Duurzaam-opgewekt-volume
+    broad_mappings:
+      - begrip:tibcm #energie-uitwisseling
+    description: omzetting van energie vanuit hernieuwbare bronnen of van elektriciteit in een installatie voor hoogrenderende warmtekrachtkoppeling
+    source: rgvo:g=2026-09-02
+    annotations:
+      tijdlijn_registratie: true
+    slots:
+      - beginmoment
+      - eindmoment
+      - netlevering
+      - waarde
+    attributes:
+      # relaties:
+      in:
+        range: GvO-installatie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        unique_key_slots:
+          - beginmoment
+          - eindmoment
+          - in
+          - netlevering
   Dynamische profielfractie elektriciteit:
     class_uri: Dynamische-profielfractie-elektriciteit
     is_a: Profielfractie
-    description: per netgebied vastgestelde quotiënt van uitgewisselde elektriciteit in een onbalansverrekeningsperiode en uitgewisselde elektriciteit in het bijbehorende kalenderjaar
+    description: per systeemgebied vastgestelde quotiënt van uitgewisselde elektriciteit in een onbalansverrekeningsperiode en uitgewisselde elektriciteit in het bijbehorende kalenderjaar
     slots:
       - beginmoment
       - eindmoment
@@ -160,7 +182,7 @@ classes:
         required: true
       # relaties:
       per:
-        range: Netgebied
+        range: Systeemgebied
         required: true
         multivalued: false
         annotations:
@@ -177,7 +199,7 @@ classes:
     class_uri: Gewogen-gemiddelde-calorische-waarde
     related_mappings:
       - begrip:tibcm #energie-uitwisseling
-    description: per netgebied gewogen gemiddelde hoeveelheid energie die vrijkomt bij verbranding per eenheid van volume
+    description: per systeemgebied gewogen gemiddelde hoeveelheid energie die vrijkomt bij verbranding per eenheid van volume
     annotations:
       tijdlijn_registratie: true
     slots:
@@ -187,7 +209,7 @@ classes:
     attributes:
       # relaties:
       per:
-        range: Netgebied
+        range: Systeemgebied
         required: true
         multivalued: false
         annotations:
@@ -226,8 +248,8 @@ classes:
       - begrip:tibcm #energie-uitwisseling
     description: stand van een specifiek telwerk op een bepaald moment
     slots:
-      - eenheid
       - herkomstindicatie
+      - meetsoort
       - waarde
     annotations:
       tijdlijn_registratie: true
@@ -243,50 +265,11 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
-      vastgesteld door:
-        range: Marktpartijsubregistratie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
           - moment
           - van
-  Opgewekt volume:
-    class_uri: Opgewekt-volume
-    broad_mappings:
-      - begrip:tibcm #energie-uitwisseling
-    description: door een GCvO-installatie ontstane energie
-    annotations:
-      tijdlijn_registratie: true
-    slots:
-      - beginmoment
-      - eindmoment
-      - netlevering
-      - waarde
-    attributes:
-      # relaties:
-      met:
-        range: GCvO-installatie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-      vastgesteld door:
-        range: Marktpartijsubregistratie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-    unique_keys:
-      identificatie:
-        unique_key_slots:
-          - beginmoment
-          - eindmoment
-          - met
-          - netlevering
   Piekbelasting:
     class_uri: Piekbelasting
     broad_mappings:
@@ -299,8 +282,8 @@ classes:
     slots:
       - beginmoment
       - eindmoment
-      - eenheid
       - energierichting
+      - meetsoort
       - resolutie
       - waarde
     attributes:
@@ -311,19 +294,13 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
-      vastgesteld door:
-        range: Marktpartijsubregistratie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
           - beginmoment
           - eindmoment
-          - eenheid
           - energierichting
+          - meetsoort
           - op
   Profielfractie:
     class_uri: Profielfractie
@@ -379,9 +356,9 @@ classes:
       tijdlijn_registratie: true
     slots:
       - beginmoment
-      - eenheid
       - eindmoment
       - energierichting
+      - meetsoort
       - waarde
     attributes:
       # relaties:
@@ -394,19 +371,13 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
-      vastgesteld door:
-        range: Marktpartijsubregistratie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
           - beginmoment
           - eindmoment
-          - eenheid
           - energierichting
+          - meetsoort
           - op
   Standaard profielfractie elektriciteit:
     class_uri: Standaard-profielfractie-elektriciteit
@@ -421,6 +392,9 @@ classes:
       - profielcategoriecode
       - vastgesteld afnametype
       - waarde
+    slot_usage:
+      vastgesteld afnametype:
+        required: false
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -484,9 +458,9 @@ classes:
     slots:
       - beginmoment
       - eindmoment
-      - eenheid
       - energierichting
       - herkomstindicatie
+      - meetsoort
       - resolutie
       - tariefperiode
       - waarde
@@ -514,53 +488,15 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
-      vastgesteld door:
-        range: Marktpartijsubregistratie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
           - beginmoment
-          - eenheid
           - energierichting
+          - meetsoort
           - op
           - resolutie
           - tariefperiode
-  Verwachte opwekking:
-    class_uri: Verwachte-opwekking
-    related_mappings:
-      - begrip:tibcm #energie-uitwisseling
-    description: verwachting van VertiCer omtrent opgewekte volumes
-    annotations:
-      tijdlijn_registratie: true
-    slots:
-      - beginmoment
-      - eindmoment
-    attributes:
-      netlevering:
-        description: geeft weer of invoeding in het energienet wordt verwacht
-        range: boolean
-        required: true
-      niet-netlevering:
-        description: geeft weer of opwekking wordt verwacht, ongeacht eventuele invoeding in het energienet
-        range: boolean
-        required: true
-      # relaties:
-      met:
-        range: GCvO-installatie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-    unique_keys:
-      identificatie:
-        unique_key_slots:
-          - beginmoment
-          - eindmoment
-          - met
   # externe entiteiten:
   Allocatiepunt:
     class_uri: aansluitingenregister:Allocatiepunt
@@ -568,8 +504,8 @@ classes:
       external_registry: Aansluitingenregister
   Any:
     class_uri: linkml:Any
-  GCvO-installatie:
-    class_uri: installatieregister:GCvO-installatie
+  GvO-installatie:
+    class_uri: installatieregister:GvO-installatie
     annotations:
       external_registry: Installatieregister
   Marktpartijsubregistratie:
@@ -580,8 +516,8 @@ classes:
     class_uri: meetinrichtingenregister:Telwerk
     annotations:
       external_registry: Meetinrichtingenregister
-  Netgebied:
-    class_uri: aansluitingenregister:Netgebied
+  Systeemgebied:
+    class_uri: aansluitingenregister:Systeemgebied
     annotations:
       external_registry: Aansluitingenregister
   Overdrachtspunt:
@@ -601,10 +537,6 @@ slots:
     description: eerste tijdstip waarop iets geldt
     range: Tijdstip
     required: true
-  eenheid:
-    description: maat waarin natuurkundige grootheden numeriek kunnen worden uitgedrukt
-    range: Eenheid
-    required: true
   eindmoment:
     description: eerste tijdstip waarop iets niet meer geldt
     range: Tijdstip
@@ -619,6 +551,10 @@ slots:
     source: bce:g=2025-12-20
     range: Herkomstindicatie
     required: true
+  meetsoort:
+    description: vorm waarin energie-uitwisseling wordt gekwantificeerd
+    range: Meetsoort
+    required: true
   netlevering:
     description: geeft aan of het volume is ingevoed op het energienet
     range: boolean
@@ -626,15 +562,8 @@ slots:
   profielcategoriecode:
     description: classificering van allocatiepunten bij elektriciteitsaansluitingen op grond van objectief vast te stellen kenmerken, exclusief het vastgesteld afnametype
     comments:
-      - Voorheen bekend als `profielcategorie`.
       - De combinatie van `profielcategoriecode` en `vastgesteld afnametype` identificeert een profielcategorie.
     range: Profielcategoriecode
-    required: true
-  vastgesteld afnametype:
-    description: bepaling of op een allocatiepunt sprake is van afname met invoeding of afname zonder invoeding
-    comments:
-      - Ook bekend als `vastgesteld afnametype`.
-    range: Vastgesteld afnametype
     required: true
   resolutie:
     description: voorgenomen tijdsduur tussen beginmoment en eindmoment
@@ -644,28 +573,33 @@ slots:
     comments:
       - Van toepassing op elektriciteit bij tijdsperioden langer dan een dag.
     range: Tariefperiode
+  vastgesteld afnametype:
+    description: bepaling of op een allocatiepunt sprake is van afname met invoeding of afname zonder invoeding
+    range: Vastgesteld afnametype
+    required: true
   waarde:
     description: hoeveelheid eenheden
     range: Reëel getal
     required: true
 
 enums:
+  Aansluitingcategorie:
+    see_also:
+      - asg:hoofdstuk=1&g=2026-02-21
+    permissible_values:
+      G1A:
+      G2A:
+      G2C:
+      GGV:
+      GIN:
+      GIS:
+      GXX:
   Bepalingsmethode:
     permissible_values:
       DYN:
         description: dynamisch berekend
       FBR:
         description: fallback regime
-  Eenheid:
-    permissible_values:
-      kvar:
-      kvarh:
-      kW:
-      kWh:
-      m3:
-      m3(n):
-      m3(n;35;17):
-      MJ/m3(n):
   Energierichting:
     permissible_values:
       afname:
@@ -681,6 +615,24 @@ enums:
       klantstand:
       overeengekomen:
       P4-stand:
+  Meetsoort:
+    permissible_values:
+      actieve energie:
+        description: elektrische energie die wordt omgezet in nuttige arbeid, uitgedrukt in kWh
+      reactieve energie:
+        description: elektrische energie die periodiek wordt uitgewisseld tussen bron en belasting voor het opbouwen van elektrische of magnetische velden en niet wordt omgezet in netto nuttige energie, uitgedrukt in kvarh
+      actief vermogen:
+        description: snelheid waarmee actieve energie wordt overgedragen, uitgedrukt in kW
+      reactief vermogen:
+        description: snelheid waarmee reactieve energie wordt uitgewisseld, uitgedrukt in kvar
+      niet-herleid volume:
+        description: volume aardgas gemeten onder de actuele druk- en temperatuuromstandigheden, uitgedrukt in kubieke meter [m3]
+      herleid volume:
+        description: volume aardgas herleid naar vastgestelde referentieomstandigheden voor druk en temperatuur, uitgedrukt in normaal kubieke meter [m3(n)]
+      calorisch gecorrigeerd volume:
+        description: volume aardgas gecorrigeerd voor druk, temperatuur en calorische waarde ten behoeve van vergelijking en verrekening, uitgedrukt in kubieke meter Groningen gas [m3(n;35,17)]
+      calorische waarde:
+        description: hoeveelheid energie die vrijkomt bij volledige verbranding van een eenheid aardgas, uitgedrukt in MJ/m3(n)
   Profielcategoriecode:
     permissible_values:
       E1A:
@@ -689,25 +641,6 @@ enums:
       E2A:
       E2B:
       E4A:
-  Vastgesteld afnametype:
-    permissible_values:
-      AMI:
-        description: afname met invoeding
-      AZI:
-        description: afname zonder invoeding
-      n.v.t.:
-        description: niet van toepassing
-  Aansluitingcategorie:
-    see_also:
-      - asg:hoofdstuk=1&g=2026-02-21
-    permissible_values:
-      G1A:
-      G2A:
-      G2C:
-      GGV:
-      GIN:
-      GIS:
-      GXX:
   Reparatiemethodiek:
     permissible_values:
       controlemeter:
@@ -742,8 +675,6 @@ enums:
     permissible_values:
       interval:
         description: kleiner dan een dag
-        comments:
-          - Ook bekend als telemetrie.
       periodiek:
         description: een dag of langer
   Resultaat:
@@ -760,6 +691,12 @@ enums:
       handmatig goedgekeurd:
       niet valide:
       valide:
+  Vastgesteld afnametype:
+    permissible_values:
+      AMI:
+        description: afname met invoeding
+      AZI:
+        description: afname zonder invoeding
 
 types:
   Cijfer:

@@ -5,12 +5,12 @@ version: 1.4-draft
 description: Het meetinrichtingenregister bevat gegevens over meetapparatuur bij gas- en elektriciteitsaansluitingen in Nederland, ten behoeve van marktprocessen.
 comments:
   - De gegevens over kleinverbruikmeetinrichtingen zijn afgeleid van het meetcomponentenregister.
-  - "De afbeelding en tekst zijn tijdelijk inconsitent. (Te doen: meeteenheid --> grootheid; vermenigvuldigingsfactor --> alleen afleidbaar bij KV; tijdlijnen.)"
+  - "De afbeelding en tekst zijn tijdelijk inconsitent. (Te doen: tijdlijnen.)"
   - |
     Vragen aan inhoudelijke experts:
 
     - Gedlt er voor meetinrichtingen een dagelijks effectueringsmoment, om 0.00 of 6.00 uur?
-    - Hebben we de juiste lijst met grootheden?
+    - Hebben we de juiste lijst met meetsoorten, ook voor grootverbruik?
 prefixes:
   linkml: https://w3id.org/linkml/
   begrip: https://begrippen.netbeheernederland.nl/id/
@@ -26,7 +26,7 @@ default_range: Tekst
 annotations:
   changes: |
     - `Telwerk` heeft nu ook een relatie naar `Grootverbruikmeetinrichting`.
-    - Telwerken hebben geen `meeteenheid` meer maar een `grootheid`. De eenheid geldt per meting of meetserie.
+    - `meeteenheid` --> `meetsoort`.
 
 classes:
   Grootverbruikmeetinrichting:
@@ -37,7 +37,7 @@ classes:
     see_also:
       - iceg:hoofdstuk=4&paragraaf=4.7&sub-paragraaf=4.7.2&g=2025-01-01
     annotations:
-      tijdlijn_registratie: true
+      tijdlijn_effectuering: true
     attributes:
       capaciteit:
         description: hoeveelheid energie die per tijdseenheid maximaal kan worden getransporteerd door de meetinrichting
@@ -127,7 +127,7 @@ classes:
       bij:
         range: Any
         exactly_one_of:
-          - range: GCvO-installatie
+          - range: GvO-installatie
           - range: Allocatiepunt bij aansluiting
         required: true
         multivalued: false
@@ -154,11 +154,9 @@ classes:
           - begrip:yn3hb #energierichting
         range: Energierichting
         required: true
-      grootheid:
-        description: maat waarin natuurkundige grootheden numeriek kunnen worden uitgedrukt
-        comments:
-          - "Validatie: bij elektriciteit kWh; bij gas of waterstof EN vermenigvuldigingsfactor = 1 EN temperatuurgecorrigeerd = ja dan m3(n), anders m3."
-        range: Grootheid
+      meetsoort:
+        description: vorm waarin energie-uitwisseling wordt gekwantificeerd
+        range: Meetsoort
         required: true
       tariefzone:
         description: geeft weer tijdens welke tariefperiode(n) het telwerk de energie-uitwisseling registreert
@@ -208,8 +206,8 @@ classes:
       external_registry: Aansluitingenregister
   Any:
     class_uri: linkml:Any
-  GCvO-installatie:
-    class_uri: installatieregister:GCvO-installatie
+  GvO-installatie:
+    class_uri: installatieregister:GvO-installatie
     annotations:
       external_registry: Installatieregister
   Overdrachtspunt:
@@ -245,13 +243,24 @@ enums:
         meaning: begrip:3j33z #afnmame
       invoeding:
         meaning: begrip:j8cpp #invoeding
-  Grootheid:
+  Meetsoort:
     permissible_values:
       actieve energie:
+        description: elektrische energie die wordt omgezet in nuttige arbeid, uitgedrukt in kWh
       reactieve energie:
+        description: elektrische energie die periodiek wordt uitgewisseld tussen bron en belasting voor het opbouwen van elektrische of magnetische velden en niet wordt omgezet in netto nuttige energie, uitgedrukt in kvarh
       actief vermogen:
+        description: snelheid waarmee actieve energie wordt overgedragen, uitgedrukt in kW
       reactief vermogen:
-      volume:
+        description: snelheid waarmee reactieve energie wordt uitgewisseld, uitgedrukt in kvar
+      niet-herleid volume:
+        description: volume aardgas gemeten onder de actuele druk- en temperatuuromstandigheden, uitgedrukt in kubieke meter [m3]
+      herleid volume:
+        description: volume aardgas herleid naar vastgestelde referentieomstandigheden voor druk en temperatuur, uitgedrukt in normaal kubieke meter [m3(n)]
+      calorisch gecorrigeerd volume:
+        description: volume aardgas gecorrigeerd voor druk, temperatuur en calorische waarde ten behoeve van vergelijking en verrekening, uitgedrukt in kubieke meter Groningen gas [m3(n;35,17)]
+      calorische waarde:
+        description: hoeveelheid energie die vrijkomt bij volledige verbranding van een eenheid aardgas, uitgedrukt in MJ/m3(n)
   Reden technisch niet op afstand uitleesbaar:
     permissible_values:
       "39.1":
