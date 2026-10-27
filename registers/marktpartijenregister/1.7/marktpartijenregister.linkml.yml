@@ -1,7 +1,7 @@
 id: https://modellen.netbeheernederland.nl/stelsel/registers/marktpartijenregister
 name: marktpartijenregister
 title: Marktpartijenregister
-version: "1.7"
+version: "1.7-draft"
 description: Het marktpartijenregister bevat alle toewijzingen van bedrijfs-EAN-codes aan ondernemingen ten behoeve van het elektronische berichtenverkeer.
 see_also:
   - iceg:hoofdstuk=2&paragraaf=2.7&artikel=2.7.2&g=2025-01-01
