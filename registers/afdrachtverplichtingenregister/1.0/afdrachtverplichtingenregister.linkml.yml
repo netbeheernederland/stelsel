@@ -4,19 +4,14 @@ title: Afdrachtverplichtingenregister
 version: 1.0-draft
 description: Het afdrachtverplichtingenregister bevindt zich in een vroege fase van ontwikkeling en bevat daarom nog geen definities.
 comments:
+  - "De eigenschap `reeds verplicht bedrag` bevat: (a) het `af te dragen bedrag` van de vorige versie (`registratie tijdlijn`) van de `Afdrachtverplichting werkelijke verbruiksafhankelijke transportkosten` als deze bestaat, anders (b) het `af te dragen bedrag` van de `Afdrachtverplichting verwachte verbruiksafhankelijke transportkosten` van dezelfde maand als deze bestaat, anders (c) `0`.
   - |
     Mapping op topic-document:
     - `Inningsverplichting verbruiksafhankelijke transportkosten`: specificatie werkelijke verbruiksafhankelijke transportkosten (WVT)
     - `Afdrachtverplichting verbruiksonafhankelijke systeemkosten`: verplichting verbruiksonafhankelijke systeemkosten
-    - `Afdrachtverplichting verwachte verbruiksafhankelijke transportkosten`: voorlopige afdracht verbruiksafhankelijke transportkosten
-    - `Afdrachtverplichting werkelijke verbruiksafhankelijke transportkosten`: verrekening verbruiksafhankelijke transportkosten (VVT)
+    - `Afdrachtverplichting verwachte verbruiksafhankelijke transportkosten`: voorlopige afdracht verwachte verbruiksafhankelijke transportkosten (VVT)
+    - `Afdrachtverplichting werkelijke verbruiksafhankelijke transportkosten`: verrekening verbruiksafhankelijke transportkosten
     - `Verzoek afdrachtverplichting werkelijke verbruiksafhankelijke transportkosten`: verzoek opnemen WVT
-    
-  - |
-    De eigenschap `reeds verplicht bedrag` bevat:
-    - het `af te dragen bedrag` van de vorige versie (`registratie tijdlijn`) van de `Afdrachtverplichting werkelijke verbruiksafhankelijke transportkosten` als deze bestaat, anders:
-    - het `af te dragen bedrag` van de `Afdrachtverplichting verwachte verbruiksafhankelijke transportkosten` van dezelfde maand als deze bestaat, anders:
-    - `0`
 see_also:
   - rge:#
 prefixes:
