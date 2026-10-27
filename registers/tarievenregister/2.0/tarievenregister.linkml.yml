@@ -1,0 +1,212 @@
+id: https://modellen.netbeheernederland.nl/stelsel/registers/tarievenregister
+name: tarievenregister
+title: Tarievenregister
+version: 2.0-draft
+description: Het tarievenregister beschrijft de tarieven die leveranciers namens systeembeheerders in rekening brengen bij aangeslotenen.
+comments:
+  - |
+      Vragen aan domeinexperts die tijdens de volgende sessie zullen worden toegelicht:
+
+      - Is de `transporttariefcategorie` (voorheen `afnemerscategorie`) enkel van toepassing op `VA-TA` en `VA-NTA`, dus niet op `VO`? Dus optioneel?
+see_also:
+  - er:hoofdstuk=2&afdeling=2.3&artikel=2.35&g=2026-09-02
+prefixes:
+  linkml: https://w3id.org/linkml/
+  begrip: https://begrippen.netbeheernederland.nl/id/
+  this: https://modellen.netbeheernederland.nl/stelsel/registers/tarievenregister#
+  marktpartijenregister: https://modellen.netbeheernederland.nl/stelsel/registers/marktpartijenregister#
+  rge: https://www.internetconsultatie.nl/regeling_gegevensuitwisseling_energiewet/b1
+  er: https://wetten.overheid.nl/jci1.3:c:BWBR0051774&
+  at: https://wetten.overheid.nl/jci1.3:c:BWBR0002448&
+  tcg: https://wetten.overheid.nl/jci1.3:c:BWBR0052341&
+  tce: https://wetten.overheid.nl/jci1.3:c:BWBR0052321&
+default_prefix: this
+imports:
+  - ../../basiswaardesoorten
+default_range: Tekst
+annotations:
+  changes: |
+    - Volledige herziening naar aanleiding van tijdsafhankelijke transporttarieven.
+
+classes:
+  Gewogen bedrag:
+    class_uri: Gewogen-bedrag
+    broad_mappings:
+      - begrip:gnhiy #aansluiting
+    description: resultaat van de toepassing van een wegingsfactor op een tarief
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+    attributes:
+      waarde:
+        description: hoeveelheid euro's
+        comments:
+          - Afleidbaar van gerelateerde entiteiten.
+        required: true
+        range: Decimaal getal
+      # relaties:
+      gewogen met:
+        range: Wegingsfactor
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      afgeleid van:
+        range: Systeemtarief
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        - gewogen met
+        - afgeleid van
+  Systeemtarief:
+    class_uri: Systeemtarief
+    broad_mappings:
+      - begrip:gnhiy #aansluiting
+    description: vastgesteld bedrag per eenheid voor een dienst van de systeembeheerder
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+    attributes:
+      bedrag:
+        description: hoeveelheid euro's
+        required: true
+        range: Decimaal getal
+      EAN-code:
+        description: unieke cijfercombinatie volgens de Europese Artikelnummer-standaard
+        required: true
+        range: Code
+      # relaties:
+      ingedeeld naar:
+        range: Tariefcategorie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      vastgesteld door:
+        range: Marktparijregistratie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        - EAN-code
+  Tariefcategorie:
+    class_uri: Tariefcategorie
+    broad_mappings:
+      - begrip:gnhiy #aansluiting
+    description: verzameling tarieven met dezelfde eigenschappen
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+    attributes:
+      energiedrager:
+        exact_mappings:
+          - begrip:bwjrm #energiedrager
+        required: true
+        range: Energiedrager
+      tariefsoort:
+        description: classificatie van de dienst waarvoor het tarief geldt
+        required: true
+        range: Tariefsoort
+      transporttariefcategorie:
+        description: verzameling aansluitingen waarover transportafhankelijke kosten worden verdeeld
+        comments:
+          - Voorheen bekend als afnemerscategorie.
+        see_also:
+          - tce:bijlage=6&g=2026-07-09
+          - tcg:hoofdstuk=2&paragraaf=2.4&artikel=2.22&g=2026-05-28
+        range: Code
+      # relaties:
+      geldig met:
+        range: Wegingsfactor
+        required: false
+        multivalued: true
+        annotations:
+          inverse_cardinality: "*"
+        comments:
+          - Enkel van toepassing bij verbruiksafhankelijk tijdsafhankelijk transporttarief (VA-TA).
+    unique_keys:
+      identificatie:
+        - energiedrager
+        - tariefsoort
+        - transporttariefcategorie
+  Transporttariefperiode:
+    class_uri: Transporttariefperiode
+    broad_mappings:
+      - begrip:gnhiy #aansluiting
+    description: aaneengesloten periode waarbinnen eenzelfde tijdsafhankelijk tarief voor transportkosten van toepassing is
+    source: rge:#
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+    attributes:
+      werkdag:
+        description: geeft aan of iets een dag is, niet zijnde een zaterdag, zondag of feestdag
+        see_also: at:artikel=3&g=2010-10-10
+        required: true
+        range: Waarheidswaarde
+      kalendermaand:
+        description: periode van de eerste tot en met de laatste dag van een maand, aangeduid met een getal van 1 tot 12 (januari tot december)
+        required: true
+        range: Code
+      kalenderuur:
+        description: periode van 60 minuten die begint op het hele uur, aangeduid met een getal van 0 tot 23
+        required: true
+        range: Code
+      # relaties:
+      geldigheid van:
+        range: Wegingsfactor
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        - geldigheid van
+  Wegingsfactor:
+    class_uri: Wegingsfactor
+    broad_mappings:
+      - begrip:gnhiy #aansluiting
+    description: relatief gewicht van een tarief
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+    attributes:
+      categorie:
+        description: identificatie van een wegingsfactor, aangeduid met een getal van 1 tot 5
+        required: true
+        range: Code
+      waarde:
+        description: hoeveelheid waarmee vermenigvuldigd moet worden
+        required: true
+        range: Decimaal getal
+    unique_keys:
+      identificatie:
+        - categorie
+
+  # verwijzingen naar externe entiteiten:
+  Marktparijregistratie:
+    class_uri: marktpartijenregister:Marktparijregistratie
+    annotations:
+      external_registry: Marktpartijenregister
+
+enums:
+  Energiedrager:
+    permissible_values:
+      elektriciteit:
+      gas:
+      waterstof:
+  Tariefsoort:
+    permissible_values:
+      VO:
+        description: verbruiksonafhankelijk systeemtarief
+        comments:
+          - Dit tarief is opgebouwd uit de periodieke aansluitvergoeding (PAV), het transportonafhankelijk transporttarief (TOVT) en het meettarief (MT); elk vermenigvuldigd met een bepaald aantal.
+      VA-TA:
+        description: verbruiksafhankelijk tijdsafhankelijk transporttarief
+      VA-NTA:
+        description: verbruiksafhankelijk niet-tijdsafhankelijk transporttarief

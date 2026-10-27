@@ -42,6 +42,13 @@ annotations:
     - `soort` toegevoegd aan `Aansluiting` omdat deze eigenschap nog in gebruik is.
     - `levensduur` toegevoegd aan `Aansluiting` en `Allocatiepunt` zodat beëindigingen expliciet zijn en betrouwbaar marktprocessen triggeren.
     - `verzoek verlengde bewaartermijn` toegevoegd vanwege nieuwe regelgeving.
+    - `Netgebied` --> `Systeemgebied` (nieuwe regelgeving)
+    - `Allocatiepunt bij netgebied` --> `Allocatiepunt bij systeemgebied` (nieuwe regelgeving)
+    - `Netkoppeling` --> `Systeemkoppeling` (nieuwe regelgeving)
+    - `secundair allocatiepunt` --> `additioneel allocatiepunt` (nieuwe regelgeving)
+    - `profielcategorie` --> `profielcategoriecode` (nieuwe regelgeving waarin het `vastgesteld afnametype` onderdeel uitmaakt van de profielcategorie)
+    - `unieke EAN-code bij MLOEA` vervallen (zoals aangekondigd)
+    - `Tarieftoepassing` vervangen door een directe relatie naar `Systeemtarief` (n.a.v. tijdsafhankelijke transporttarieven)
 
 classes:
   Aansluiting:
@@ -87,7 +94,7 @@ classes:
         required: true
       soort:
         description: classificatie gebaseerd op het aangesloten object en het overeengekomen gebruik
-        deprecated: Deze eigenschap combineert meerdere dimensies (betreffende de aansluitlocatie, elektriciteitsproductie-eenheden, netkoppelingen en netverlies) en zal daarom in de toekomst buiten gebruik gesteld gaan worden.
+        deprecated: Deze eigenschap combineert meerdere dimensies (betreffende de aansluitlocatie, elektriciteitsproductie-eenheden, systeemkoppelingen en netverlies) en zal daarom in de toekomst buiten gebruik gesteld gaan worden.
       uitsluitend elektriciteitsproductie-eenheden:
         description: geeft aan of achter een aansluiting zich uitsluitend elektriciteitsproductie-eenheden bevinden en geen ander verbruik dan het eigen verbruik van de desbetreffende elektriciteitsproductie-eenheden
         see_also:
@@ -96,11 +103,6 @@ classes:
           - Ook wel bekend als 'zuivere teruglevering'.
         range: Waarheidswaarde
         required: true
-      unieke EAN-code bij MLOEA:
-        description: EAN-code die ongelijk is aan die van een allocatiepunt
-        comments:
-          - MLOEA staat voor meerdere leveranciers op een aansluiting. Het is een configuratie waarbij een aansluiting meer dan één allocatiepunt heeft. Omdat de aansluiting en het primaire allocatiepunt (PAP) dezelfde EAN-code delen, helpt de unieke EAN-code expliciet te maken dat het om de aansluiting gaat. Deze EAN-code staat ook wel bekend als virtueel allocatiepunt (VAP) of overdrachtspunt MLOEA (OPM), terwijl het geen allocatiepunt of overdrachtspunt betreft.
-        deprecated: Als in het berichtenverkeer tussen netbeheerder en meetverantwoordelijke voortaan expliciet wordt gemaakt welk entiteittype men bedoeld (aansluiting of allocatiepunt), dan is de unieke EAN-code niet meer nodig.
       weekmax:
         description: geeft aan of de kWmax per week gemeten moet worden
         see_also:
@@ -117,8 +119,20 @@ classes:
       deel van:
         comments:
         - "Validatie: deze relatie is verplicht als een van de allocatiepunten 'in bedrijf' is."
-        - "Validatie: aansluiting en netgebied hebben dezelfde beheerder."
-        range: Netgebied
+        - "Validatie: aansluiting en systeemgebied hebben dezelfde beheerder."
+        range: Systeemgebied
+        required: false
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      tegen verbruiksafhankelijk:
+        range: Systeemtarief
+        required: false
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      tegen verbruiksonafhankelijk:
+        range: Systeemtarief
         required: false
         multivalued: false
         annotations:
@@ -287,7 +301,7 @@ classes:
     slot_usage:
       EAN-code:
         comments:
-          - "Validatie: bij primair allocatiepunt gelijk aan EAN-code aansluiting, bij secundair ongelijk."
+          - "Validatie: bij primair allocatiepunt gelijk aan EAN-code aansluiting, bij additioneel allocatiepunt ongelijk."
         see_also:
           - nce:hoofdstuk=2&paragraaf=2.1&artikel=2.4&g=2022-11-25
         annotations:
@@ -299,10 +313,10 @@ classes:
         see_also:
           - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
           - nce:hoofdstuk=10&paragraaf=10.4&artikel=10.17&g=2023-06-10
-      profielcategorie:
+      profielcategoriecode:
         description: groep allocatiepunten waarvoor een reeks profielfracties wordt vastgesteld
         comments:
-          - Ook bekend als 'afnamecategorie'.
+          - Samen met het `vastgesteld afnametype` (`afname met invoeding`, `afname zonder invoeding`) identificeert dit de profielcategorie.
           - Voorbeelden van mogelijke waarden zijn E1A, E1B, E1C, E2A, E2B, E4A, G1A, G2A, G2C, GGV, GIN, GIS, GKV, GMN en GXX.
         see_also:
           - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
@@ -359,7 +373,7 @@ classes:
         annotations:
           personal_data: true
       type:
-        description: geeft weer of het allocatiepunt primair of secundair is
+        description: geeft weer of het allocatiepunt primair of additioneel is
         source: bce:hoofdstuk=1&artikel=1.1&g=2022-11-25
         range: Type allocatiepunt bij aansluiting
       verzoek verlengde bewaartermijn:
@@ -386,19 +400,19 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: 1..*
-  Allocatiepunt bij netgebied:
-    class_uri: Allocatiepunt-bij-netgebied
-    description: allocatiepunt toegekend aan een netgebied
+  Allocatiepunt bij systeemgebied:
+    class_uri: Allocatiepunt-bij-systeemgebied
+    description: allocatiepunt toegekend aan een systeemgebied
     is_a: Allocatiepunt
     attributes:
       type:
         description: geeft weer bij welke vorm van netverlies het allocatiepunt hoort
         comments:
-          - "Validatie: per netgebied en type is er maximaal één allocatiepunt."
-        range: Type allocatiepunt bij netgebied
+          - "Validatie: per systeemgebied en type is er maximaal één allocatiepunt."
+        range: Type allocatiepunt bij systeemgebied
       # relaties
       toegekend aan:
-        range: Netgebied
+        range: Systeemgebied
         required: true
         multivalued: false
         annotations:
@@ -486,69 +500,6 @@ classes:
         unique_key_slots:
           - deel van
           - serienummer
-  Netgebied:
-    class_uri: Netgebied
-    exact_mappings:
-      - begrip:zqagh #netgebied
-    annotations:
-      tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
-    see_also:
-      - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
-    slots:
-      - EAN-code
-      - energiedrager
-    attributes:
-      naam:
-        description: woord of combinatie van woorden waarmee een netgebied wordt aangeduid
-      # relaties
-      beheerd door:
-        range: Marktpartijsubregistratie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-    unique_keys:
-      identificatie:
-        unique_key_slots:
-          - EAN-code
-  Netkoppeling:
-    class_uri: Netkoppeling
-    broad_mappings:
-      - begrip:gnhiy #aansluiting
-    annotations:
-      tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
-    description: recht op het gebruik van één of meer verbindingen tussen twee energienetten of tussen een energienet en een interconnector
-    source: bcg:hoofdstuk=1&artikel=1.1&g=2021-06-01
-    comments:
-      - "Een koppeling met een gesloten distributiesysteem wordt in dit register beschouwd als netkoppeling als de beheerder gebruik maakt van het elektronische berichtenverkeer ten behoeve van het faciliteren van derdentoegang (zie artikel 2.4, vierde lid van de Netcode elektriciteit)."
-    slots:
-      - EAN-code
-    attributes:
-      # relaties
-      deel van:
-        range: Netgebied
-        comments:
-          - De beheerder van het netgebied waartoe de netkoppeling behoort, is de beheerder van de netkoppeling.
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-      koppeling met:
-        range: Netgebied
-        comments:
-          - Deze relatie is optioneel voor het geval er geen sprake is van een gekoppeld netgebied, zoals bij een koppeling met een interconnector.
-        required: false
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-    unique_keys:
-      identificatie:
-        unique_key_slots:
-          - EAN-code
   Overdrachtspunt:
     class_uri: Overdrachtspunt
     annotations:
@@ -620,7 +571,7 @@ classes:
         range: Any
         exactly_one_of:
           - range: Aansluiting
-          - range: Netkoppeling
+          - range: Systeemkoppeling
         required: true
         multivalued: false
         annotations:
@@ -802,33 +753,25 @@ classes:
         comments:
           - Ook bekend als factor of security (FS) en instrumentsveiligheidsfactor.
         range: Reëel getal
-  Tarieftoepassing:
-    class_uri: Tarieftoepassing
-    broad_mappings:
-      - begrip:gnhiy #aansluiting
+  Systeemgebied:
+    class_uri: Systeemgebied
+    exact_mappings:
+      - begrip:zqagh #systeemgebied
     annotations:
       tijdlijn_geldigheid: true
       tijdlijn_registratie: true
       tijdlijn_effectuering: true
-    description: tariefregel die voor een aansluiting vastlegt welke tariefcomponent geldt en hoe vaak deze in rekening wordt gebracht
-    comments:
-      - De afleidingsregels staan in het tarievenregister.
-      - De methode in artikel 8.1.6 van de Informatiecode elektriciteit en gas houdt geen rekening met de grote variatie in het aantal overdrachtspunten zoals bij strengen van lichtmasten (artikel 3.3.3 van de Tarievencode elektriciteit). Dit register doet dat wel door niet naar het totaaltarief maar de tariefcomponenten te linken.
+    see_also:
+      - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
+    slots:
+      - EAN-code
+      - energiedrager
     attributes:
-      aantal:
-        description: getal waarmee het bedrag van de tariefcomponent vermenigvuldigd moet worden
-        comments:
-          - De afleidingsregels staan in het tarievenregister.
-        range: Geheel getal
+      naam:
+        description: woord of combinatie van woorden waarmee een systeemgebied wordt aangeduid
       # relaties
-      van:
-        range: Aansluiting
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-      op:
-        range: Tariefcomponent
+      beheerd door:
+        range: Marktpartijsubregistratie
         required: true
         multivalued: false
         annotations:
@@ -836,8 +779,43 @@ classes:
     unique_keys:
       identificatie:
         unique_key_slots:
-          - van
-          - op
+          - EAN-code
+  Systeemkoppeling:
+    class_uri: Systeemkoppeling
+    broad_mappings:
+      - begrip:gnhiy #aansluiting
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+      tijdlijn_effectuering: true
+    description: recht op het gebruik van één of meer verbindingen tussen twee energienetten of tussen een energienet en een interconnector
+    source: bcg:hoofdstuk=1&artikel=1.1&g=2021-06-01
+    comments:
+      - "Een koppeling met een gesloten distributiesysteem wordt in dit register beschouwd als systeemkoppeling als de beheerder gebruik maakt van het elektronische berichtenverkeer ten behoeve van het faciliteren van derdentoegang (zie artikel 2.4, vierde lid van de Netcode elektriciteit)."
+    slots:
+      - EAN-code
+    attributes:
+      # relaties
+      deel van:
+        range: Systeemgebied
+        comments:
+          - De beheerder van het systeemgebied waartoe de systeemkoppeling behoort, is de beheerder van de systeemkoppeling.
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      koppeling met:
+        range: Systeemgebied
+        comments:
+          - Deze relatie is optioneel voor het geval er geen sprake is van een gekoppeld systeemgebied, zoals bij een koppeling met een interconnector.
+        required: false
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        unique_key_slots:
+          - EAN-code
 
   # Exnterne entiteiten
   Any:
@@ -870,8 +848,8 @@ classes:
     class_uri: bag:standplaats
     annotations:
       external_registry: Basisregistratie Adressen en Gebouwen
-  Tariefcomponent:
-    class_uri: tarievenregister:Tariefcomponent
+  Systeemtarief:
+    class_uri: tarievenregister:Systeemtarief
     annotations:
       external_registry: Tarievenregister
   Verblijfsobject:
@@ -1054,9 +1032,9 @@ enums:
     permissible_values:
       PAP:
         description: primair allocatiepunt
-      SAP:
-        description: secundair allocatiepunt
-  Type allocatiepunt bij netgebied:
+      AAP:
+        description: additioneel allocatiepunt
+  Type allocatiepunt bij systeemgebied:
     permissible_values:
       NVB:
         description: netverlies door transportonafhankelijk netverbruik
