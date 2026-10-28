@@ -2,7 +2,7 @@ id: https://modellen.netbeheernederland.nl/stelsel/registers/energie-uitwisselin
 name: energie-uitwisselingsregister
 title: Energie-uitwisselingsregister
 version: 1.4-draft
-description: Het energie-uitwisselingsregister bevat de met een energienet uitgewisselde energie zoals formeel vastgesteld.
+description: Het energie-uitwisselingsregister beschrijft bemeten uitgewisselde energie met een energienet.
 comments:
   - Vanwege de verschillende doelen die ze dienen, onderscheiden we energie-uitwisselingen naar de resolutiecategorieën `interval` (met hoge resolutie) en `periodiek` (met lage resolutie).
 see_also:
@@ -31,7 +31,7 @@ imports:
 default_range: Tekst
 annotations:
   changes: |
-    - `Dispuut` toegevoegd.
+    - `Dispuut` en `Alternatieve meterstand` toegevoegd.
     - `Jaarverbruik telemetrieverbruikers` toegevoegd.
     - `profielcategorie` bij gas --> `aansluitingcategorie` (nieuwe regelgeving).
     - `profielcategorie` bij elektriciteit --> `profielcategoriecode` (nieuwe regelgeving, vormt samen met `vastgesteld afnametype` de profielcategorie).
@@ -42,10 +42,10 @@ annotations:
     - `resolutie` toegevoegd aan `Uitgewisseld volume` (ontbrak), daarom tevens `interval` op `Piekbelasting` gewijzigd naar `resolutie`.
     - ISO 3610-tijdlijnen correct toegepast (geen `tijdlijn geldigheid` bij gebeurtenissen).
     - `Uitgewisseld volume` relateert niet langer aan GvO-installatie (was een vergissing).
-    - `eindmoment` is deel van de identificatie bij gebeurtenissen die elkaar in principe kunnen overlappen (`Uitgewisseld volume`, `Restvolume`, `Piekbelasting`, `Verwachte opwekking`, `Duurzaam opgewekt volume`).
+    - `eindmoment` is deel van de identificatie bij gebeurtenissen die elkaar in principe kunnen overlappen (`Uitgewisseld volume`, `Restvolume`, `Piekbelasting`, `Verwachte opwekking`, `Productievolume`).
     - `bepalingsmethode` toegevoegd aan dynamische profielfracties.
     - `Verwachte opwekking` verwijderd (moet worden gezien als een verzoek aan het register, niet een uit te leveren registergegeven).
-    - `Opgewekt volume` --> `Duurzaam opgewekt volume` (geeft de betekenis beter weer).
+    - `Opgewekt volume` --> `Productievolume` (beter herkenbaar).
     - `vastgesteld door` verwijderd (is slechts intern relevant voor traceerbaarheid).
     - `eenheid` vervangen door `meetsoort` (voor een meer expliciete betekenis).
 
@@ -65,6 +65,24 @@ classes:
       identificatie:
         unique_key_slots:
           - beginmoment
+  Alternatieve meterstand:
+    class_uri: Alternatieve-meterstand
+    is_a: Meterstand
+    description: in een dispuut door de wederpartij aangedragen vervangende meterstand
+    attributes:
+      # relaties:
+      aangedragen in:
+        range: Dispuut
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "1..*"
+    unique_keys:
+      identificatie:
+        unique_key_slots:
+          - aangedragen in
+          - moment
+          - van
   Calorische omrekenfactor:
     class_uri: Calorische-omrekenfactor
     related_mappings:
@@ -101,10 +119,6 @@ classes:
     slots:
       - herkomstindicatie
     attributes:
-      alternatieve meterstand:
-        description: door de wederpartij aangedragen vervangende meterstandwaarde
-        range: Decimaal getal
-        required: true
       identificatie:
         description: unieke aanduiding waarmee iets binnen een gegeven context ondubbelzinnig herkenbaar is
         range: Code
@@ -120,50 +134,32 @@ classes:
       toelichting op resultaat:
         description: onderbouwing van het besluit door de initiërende partij
       # relaties:
-      gestart door:
+      gericht tegen:
+        description: geeft aan wie de 'initiërende partij' is in het dispuutproces
+        comments:
+          - Dit is niet altijd de partij die de meterstand heeft vastgesteld.
+        range: Marktpartijsubregistratie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      ingediend door:
+        description: geeft aan wie de 'wederpartij' is in het dispuutproces
         range: Marktpartijsubregistratie
         required: true
         multivalued: false
         annotations:
           inverse_cardinality: "*"
       over:
-        range: Meterstand
+        range: Vastgestelde meterstand
         required: true
-        multivalued: false
+        multivalued: true
         annotations:
           inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
           - identificatie
-  Duurzaam opgewekt volume:
-    class_uri: Duurzaam-opgewekt-volume
-    broad_mappings:
-      - begrip:tibcm #energie-uitwisseling
-    description: omzetting van energie vanuit hernieuwbare bronnen of van elektriciteit in een installatie voor hoogrenderende warmtekrachtkoppeling
-    source: rgvo:g=2026-09-02
-    annotations:
-      tijdlijn_registratie: true
-    slots:
-      - beginmoment
-      - eindmoment
-      - netlevering
-      - waarde
-    attributes:
-      # relaties:
-      in:
-        range: GvO-installatie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
-    unique_keys:
-      identificatie:
-        unique_key_slots:
-          - beginmoment
-          - eindmoment
-          - in
-          - netlevering
   Dynamische profielfractie elektriciteit:
     class_uri: Dynamische-profielfractie-elektriciteit
     is_a: Profielfractie
@@ -181,7 +177,7 @@ classes:
         range: Bepalingsmethode
         required: true
       # relaties:
-      per:
+      in:
         range: Systeemgebied
         required: true
         multivalued: false
@@ -192,9 +188,32 @@ classes:
         unique_key_slots:
           - beginmoment
           - energierichting
-          - per
+          - in
           - profielcategoriecode
           - vastgesteld afnametype
+  Jaarverbruik telemetrieverbruikers:
+    class_uri: Jaarverbruik-telemetrieverbruikers
+    broad_mappings:
+      - begrip:tibcm #energie-uitwisseling
+    description: werkelijk gemeten gasafname in m3(n;35,17) in de meest recente 12 volledige gasmaanden voor telemetrieverbruikers
+    source: bcg2026:g=2026-02-21
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+    slots:
+      - waarde
+    attributes:
+      # relaties:
+      op:
+        range: Allocatiepunt
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "0..1"
+    unique_keys:
+      identificatie:
+        unique_key_slots:
+          - op
   Gewogen gemiddelde calorische waarde:
     class_uri: Gewogen-gemiddelde-calorische-waarde
     related_mappings:
@@ -219,29 +238,6 @@ classes:
         unique_key_slots:
           - beginmoment
           - per
-  Jaarverbruik telemetrieverbruikers:
-    class_uri: Jaarverbruik-telemetrieverbruikers
-    broad_mappings:
-      - begrip:tibcm #energie-uitwisseling
-    description: werkelijk gemeten gasafname in m3(n;35,17) in de meest recente 12 volledige gasmaanden voor telemetrieverbruikers
-    source: bcg2026:g=2026-02-21
-    annotations:
-      tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-    slots:
-      - waarde
-    attributes:
-      # relaties:
-      op:
-        range: Allocatiepunt
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "0..1"
-    unique_keys:
-      identificatie:
-        unique_key_slots:
-          - op
   Meterstand:
     class_uri: Meterstand
     broad_mappings:
@@ -294,6 +290,12 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
+      vastgesteld door:
+        range: Marktpartijsubregistratie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -302,6 +304,40 @@ classes:
           - energierichting
           - meetsoort
           - op
+  Productievolume:
+    class_uri: Productievolume
+    broad_mappings:
+      - begrip:tibcm #energie-uitwisseling
+    description: energie opgewekt in een installatie van een aangeslotene
+    source: rgvo:g=2026-09-02
+    annotations:
+      tijdlijn_registratie: true
+    slots:
+      - beginmoment
+      - eindmoment
+      - netlevering
+      - waarde
+    attributes:
+      # relaties:
+      opgewekt in:
+        range: GvO-installatie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      vastgesteld door:
+        range: Marktpartijsubregistratie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        unique_key_slots:
+          - beginmoment
+          - eindmoment
+          - netlevering
+          - opgewekt in
   Profielfractie:
     class_uri: Profielfractie
     related_mappings:
@@ -367,6 +403,12 @@ classes:
         exactly_one_of:
           - range: Allocatiepunt
           - range: Overdrachtspunt
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      vastgesteld door:
+        range: Marktpartijsubregistratie
         required: true
         multivalued: false
         annotations:
@@ -488,6 +530,12 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
+      vastgesteld door:
+        range: Marktpartijsubregistratie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -497,6 +545,24 @@ classes:
           - op
           - resolutie
           - tariefperiode
+  Vastgestelde meterstand:
+    class_uri: Vastgestelde-meterstand
+    is_a: Meterstand
+    description: officieel bevestigde meterstand
+    attributes:
+      # relaties:
+      vastgesteld door:
+        range: Marktpartijsubregistratie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        unique_key_slots:
+          - moment
+          - van
+
   # externe entiteiten:
   Allocatiepunt:
     class_uri: aansluitingenregister:Allocatiepunt
