@@ -4,7 +4,7 @@ title: Energie-uitwisselingsregister
 version: "1.4"
 description: Het energie-uitwisselingsregister legt de bemeten energie-uitwisseling met een energienet vast, evenals de parameters waarmee de onbemeten energie-uitwisseling kan worden bepaald.
 comments:
-  - De volumes voor onbemeten energie-uitwisseling worden bewust niet in dit register vastgelegd. Deze volumes worden namelijk voor een specifiek doel (zoals alloceren of factureren) afzonderlijk berekend, met een bij dat doel passend vaststellingsmoment, granulariteit en tijdreeks.
+  - De volumes voor onbemeten energie-uitwisseling worden bewust niet in dit register vastgelegd. Deze volumes worden namelijk voor een specifiek doel (zoals alloceren of factureren) afzonderlijk berekend, met een bij dat doel passend vaststellingsmoment en granulariteit.
   - "Met het oog op doelbinding en de bescherming van persoonsgegevens, onderscheiden we uitgewisselde volumes naar hun resolutiecategorie: `interval` (met hoge resolutie, zoals kwartier- of uurwaarden) en `periodiek` (met lage resolutie, zoals maand- of jaarvolumes)."
 see_also:
   - iceg:g=2025-01-01
