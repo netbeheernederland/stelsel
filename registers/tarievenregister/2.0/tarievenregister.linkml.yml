@@ -7,7 +7,11 @@ comments:
   - |
       Vragen aan domeinexperts die tijdens de volgende sessie zullen worden toegelicht:
 
-      - Is de `transporttariefcategorie` (voorheen `afnemerscategorie`) enkel van toepassing op `VA-TA` en `VA-NTA`, dus niet op `VO`? Dus optioneel?
+      - Is de `transporttariefcategorie` (voorheen `afnemerscategorie`) enkel van toepassing op `VA-TA` en `VA-NTA`, dus niet op `VO`? Dus optioneel? Hoe werkt dat in de structuur van de EAN13 van een VO?
+      - Kennen we centraal het ongewogen VA-NTA?
+      - De tariefcomponenten van `VO` (`PAV`, `TOVT`, `MT`) komen nu niet voor in het register: terecht?
+      - Bestaat `VO` ook voor een deel uit `TAVT`?
+
 see_also:
   - er:hoofdstuk=2&afdeling=2.3&artikel=2.35&g=2026-09-02
 prefixes:

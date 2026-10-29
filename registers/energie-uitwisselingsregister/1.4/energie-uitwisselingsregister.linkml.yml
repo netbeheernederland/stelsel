@@ -1,10 +1,11 @@
 id: https://modellen.netbeheernederland.nl/stelsel/registers/energie-uitwisselingsregister
 name: energie-uitwisselingsregister
 title: Energie-uitwisselingsregister
-version: 1.4-draft
-description: Het energie-uitwisselingsregister beschrijft bemeten uitgewisselde energie met een energienet.
+version: "1.4"
+description: Het energie-uitwisselingsregister legt de bemeten energie-uitwisseling met een energienet vast, evenals de parameters waarmee de onbemeten energie-uitwisseling kan worden bepaald.
 comments:
-  - Vanwege de verschillende doelen die ze dienen, onderscheiden we energie-uitwisselingen naar de resolutiecategorieën `interval` (met hoge resolutie) en `periodiek` (met lage resolutie).
+  - De volumes voor onbemeten energie-uitwisseling worden bewust niet in dit register vastgelegd. Deze volumes worden namelijk voor een specifiek doel (zoals alloceren of factureren) afzonderlijk berekend, met een bij dat doel passend vaststellingsmoment, granulariteit en tijdreeks.
+  - "Met het oog op doelbinding en de bescherming van persoonsgegevens, onderscheiden we uitgewisselde volumes naar hun resolutiecategorie: `interval` (met hoge resolutie, zoals kwartier- of uurwaarden) en `periodiek` (met lage resolutie, zoals maand- of jaarvolumes)."
 see_also:
   - iceg:g=2025-01-01
   - rge:#
@@ -18,11 +19,10 @@ prefixes:
   meetinrichtingenregister: https://modellen.netbeheernederland.nl/stelsel/registers/meetinrichtingenregister#
   asg: https://wetten.overheid.nl/jci1.3:c:BWBR0052342&
   bce: https://wetten.overheid.nl/jci1.3:c:BWBR0037938&
-  bcg: https://wetten.overheid.nl/jci1.3:c:BWBR0037923&
+  bce2026: https://wetten.overheid.nl/jci1.3:c:BWBR0052320&
   bcg2026: https://wetten.overheid.nl/jci1.3:c:BWBR0052329&
   iceg: https://wetten.overheid.nl/jci1.3:c:BWBR0037934&
   mcg: https://wetten.overheid.nl/jci1.3:c:BWBR0037925&
-  nce: https://wetten.overheid.nl/jci1.3:c:BWBR0037940&
   rge: https://www.internetconsultatie.nl/regeling_gegevensuitwisseling_energiewet/b1
   rgvo: https://wetten.overheid.nl/jci1.3:c:BWBR0035971&
 default_prefix: this
@@ -31,8 +31,8 @@ imports:
 default_range: Tekst
 annotations:
   changes: |
-    - `Dispuut` en `Alternatieve meterstand` toegevoegd.
-    - `Jaarverbruik telemetrieverbruikers` toegevoegd.
+    - `Dispuut` en `Alternatieve meterstand` toegevoegd (ontbrak).
+    - `Jaarverbruik telemetrieverbruikers` toegevoegd (ontbrak).
     - `profielcategorie` bij gas --> `aansluitingcategorie` (nieuwe regelgeving).
     - `profielcategorie` bij elektriciteit --> `profielcategoriecode` (nieuwe regelgeving, vormt samen met `vastgesteld afnametype` de profielcategorie).
     - `Allocatiepunt bij aansluiting` vervangen door `Allocatiepunt` (zodat naast aansluitingen ook systeemgebieden meedoen).
@@ -40,13 +40,12 @@ annotations:
     - `gereconcilieerd` verwijderd (hoort thuis in het reconciliatieproces).
     - `kWmax` --> `Piekbelasting` (energiedrageragnostische terminologie)
     - `resolutie` toegevoegd aan `Uitgewisseld volume` (ontbrak), daarom tevens `interval` op `Piekbelasting` gewijzigd naar `resolutie`.
-    - ISO 3610-tijdlijnen correct toegepast (geen `tijdlijn geldigheid` bij gebeurtenissen).
+    - ISO 3610-tijdlijnen correct toegepast (geen `tijdlijn geldigheid` bij perduranten/gebeurtenissen).
     - `Uitgewisseld volume` relateert niet langer aan GvO-installatie (was een vergissing).
-    - `eindmoment` is deel van de identificatie bij gebeurtenissen die elkaar in principe kunnen overlappen (`Uitgewisseld volume`, `Restvolume`, `Piekbelasting`, `Verwachte opwekking`, `Productievolume`).
-    - `bepalingsmethode` toegevoegd aan dynamische profielfracties.
+    - `eindmoment` is deel van de identificatie bij gebeurtenissen die elkaar in principe kunnen overlappen (`Uitgewisseld volume`, `Restvolume`, `Piekbelasting`, `Productievolume`).
+    - `bepalingsmethode` toegevoegd aan dynamische profielfracties (ontbrak).
     - `Verwachte opwekking` verwijderd (moet worden gezien als een verzoek aan het register, niet een uit te leveren registergegeven).
     - `Opgewekt volume` --> `Productievolume` (beter herkenbaar).
-    - `vastgesteld door` verwijderd (is slechts intern relevant voor traceerbaarheid).
     - `eenheid` vervangen door `meetsoort` (voor een meer expliciete betekenis).
 
 classes:
@@ -96,7 +95,7 @@ classes:
       - waarde
     attributes:
       # relaties:
-      per:
+      in:
         range: Systeemgebied
         required: true
         multivalued: false
@@ -106,7 +105,7 @@ classes:
       identificatie:
         unique_key_slots:
           - beginmoment
-          - per
+          - in
   Dispuut:
     class_uri: Dispuut
     related_mappings:
@@ -227,7 +226,7 @@ classes:
       - waarde
     attributes:
       # relaties:
-      per:
+      in:
         range: Systeemgebied
         required: true
         multivalued: false
@@ -237,10 +236,10 @@ classes:
       identificatie:
         unique_key_slots:
           - beginmoment
-          - per
+          - in
   Meterstand:
     class_uri: Meterstand
-    broad_mappings:
+    related_mappings:
       - begrip:tibcm #energie-uitwisseling
     description: stand van een specifiek telwerk op een bepaald moment
     slots:
@@ -426,7 +425,7 @@ classes:
     is_a: Profielfractie
     description: verwachte energie-uitwisseling op een allocatiepunt bij gestandaardiseerde condities en op basis van een genormaliseerd jaar
     see_also:
-      - iceg:bijlage=1&g=2025-01-01
+      - bce2026:g=2026-07-09
     slots:
       - beginmoment
       - eindmoment
@@ -492,7 +491,7 @@ classes:
           - aansluitingcategorie
   Uitgewisseld volume:
     class_uri: Uitgewisseld-volume
-    narrow_mappings:
+    broad_mappings:
       - begrip:tibcm #energie-uitwisseling
     description: hoeveelheid of kwaliteit van energie, uitgewisseld met een energienet
     annotations:
@@ -518,7 +517,7 @@ classes:
         range: Resolutiecategorie
       validatiestatus:
         description: resultaat van de validatie van de waarde
-        source: bce:g=2025-12-20
+        source: bce2026:g=2026-07-09
         range: Validatiestatus
       # relaties:
       op:
@@ -614,7 +613,7 @@ slots:
     required: true
   herkomstindicatie:
     description: oorsprong van een waarde
-    source: bce:g=2025-12-20
+    source: bce2026:g=2026-07-09
     range: Herkomstindicatie
     required: true
   meetsoort:
@@ -763,9 +762,3 @@ enums:
         description: afname met invoeding
       AZI:
         description: afname zonder invoeding
-
-types:
-  Cijfer:
-    description: enkel karakter dat een numeriek symbool weergeeft
-    typeof: Code
-    pattern: "^[0-9]$"
