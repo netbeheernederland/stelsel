@@ -26,8 +26,9 @@ annotations:
   changes: |
     - `Elektriciteitslaadeenheid` is toegevoegd als entiteit
     - `Groep van laadpunten` is toegevoegd als entiteit
-    - `verbruikseenheid`, `groep van verbruikselementen` zijn toegevoegd als entiteiten 
+    - `verbruikseenheid`, `groep van verbruikselementen` zijn toegevoegd als entiteiten
     - `toegangelijkheidscategorie` attribuut is verplaatst naar `elektriceitsinstallatie-eenheid`
+    - `GCvO-installatie` is aangepast naar `GvO-installatie` vanwege veranderde regelgeving
 classes:
   Aanmelder:
     class_uri: Aanmelder
@@ -313,8 +314,8 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "1..*"
-  GCvO-installatie:
-    class_uri: GCvO-installatie
+  GvO-installatie:
+    class_uri: GvO-installatie
     broad_mappings:
       - begrip:gtj7b #installatie
     annotations:
@@ -322,10 +323,8 @@ classes:
       levensduur: true
       levensduur_begin: moment van inbedrijfname
       levensduur_einde: moment van uitbedrijfname
-    description: productie-installatie of een op grond van de criteria uit artikel 24 van de Regeling garanties van oorsprong en certificaten van oorsprong afgebakend deel daarvan, die of dat op grond van artikel 16, eerste lid, onderdeel h, van de Elektriciteitswet 1998, of artikel 10, vijfde lid, onderdeel c, van de Gaswet, wordt aangemerkt als een installatie voor de productie van energie als bedoeld in artikel 73, eerste lid van de Elektriciteitswet 1998, of artikel 66i, eerste lid van de Gaswet
-    source: bce:g=2025-05-08
-    see_also:
-      - rgcvo:g=2025-04-01
+    description: Installatie waarin energie wordt opgewekt met een garantie van oorsprong
+    source: rgcvo:g=2026-09-02
     slots:
       - EAN-code
     attributes:
@@ -338,7 +337,7 @@ classes:
         description: geeft aan of sprake is van een installatie voor hoogrenderende warmtekrachtkoppeling (HR-WKK)
         range: Waarheidswaarde
       subsidie:
-        description: geeft aan of de GCvO-installatie overheidssteun ontvangt of geniet
+        description: geeft aan of de GvO-installatie overheidssteun ontvangt of geniet
         range: Waarheidswaarde
       primaire energiebron:
         description: stof, object of natuurlijke plaats waaruit de meeste energie wordt gehaald
