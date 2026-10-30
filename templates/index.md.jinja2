@@ -287,7 +287,7 @@ parent: "{{schema.title}}"
 | Waarde | Omschrijving |
 | :--- | :--- |
 {% if e.permissible_values -%}
-{% for pv in e.permissible_values.values() | sort(attribute='text') -%}
+{% for pv in e.permissible_values.values() | sort(attribute=text) -%}
 | {{pv.text}} | {{omschrijving(pv)}} |
 {% endfor -%}
 {% else -%}
@@ -306,3 +306,16 @@ parent: "{{schema.title}}"
 {% endif -%}
 | {{anchor(t)}}{{t.name}} | {{omschrijving(t)}} | {% if t.typeof %}{{link(t.typeof, true)}}{% endif %} | {% if t.pattern %}`{{t.pattern}}`{% endif %} |
 {%- endfor %}
+
+{% if schema.annotations.approvals %}
+{% for a in schema.annotations.approvals.value | sort(attribute=source_authority) %}
+{% if loop.first %}
+## Goedkeuring
+{{ '{: .no_toc }' }}
+
+| Bronhouder | Vertegenwoordigd door | Datum |
+| :--- | :--- | :--- |
+{% endif -%}
+| {{a.source_authority}} | {{a.represented_by}} | {{a.date}} |
+{%- endfor %}
+{% endif %}

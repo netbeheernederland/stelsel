@@ -22,6 +22,16 @@ annotations:
   changes: |
     - Dit is een wijziging aan het model. En dit is de reden.
     - Dit is nog een wijziging, met weer een reden.
+  approvals:
+    - source_authority: Stedin # bronhouder (verantwoordelijk voor de gegevens en hun kwaliteit)
+      represented_by: Adviseur Sectorstrategie # geen persoonsnaam (AVG) maar een herkenbare functie of rol
+      date: 2026-09-03 # datum van goedkeuring (jjjj-mm-dd)
+    - source_authority: Alliander
+      represented_by: Manager Marktdata
+      date: 2026-10-17
+    - source_authority: Enexis
+      represented_by: Product Owner Meetdata
+      date: 2026-10-24
 
 # Overal kun je de volgende elementen gebruiken:
 # - mappings (exact_mappings, etc.): voor mappings op begrippen
