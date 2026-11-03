@@ -24,25 +24,27 @@ annotations:
     - Volledige herziening naar aanleiding van tijdsafhankelijke transporttarieven.
 
 classes:
-  Deeltarief:
-    class_uri: Deeltarief
+  Gewogen tariefhoogte:
+    class_uri: Gewogen-tariefhoogte
     broad_mappings:
       - begrip:gnhiy #aansluiting
-    description: onderdeel van een systeemtarief, gebaseerd op een intern basistarief, dienend om de uiteindelijke vergoeding te kunnen herleiden naar dat basistarief
+    description: met een wegingsfactor vermenigvuldigde tariefhoogte
     annotations:
       tijdlijn_geldigheid: true
       tijdlijn_registratie: true
     attributes:
-      bedrag:
-        description: hoeveelheid euro's
+      waarde:
+        description: hoeveelheid eenheden
         required: true
         range: Decimaal getal
-      tariefsoort:
-        description: classificatie van de dienst waarvoor het deeltarief geldt
-        range: Deeltariefsoort
-        required: true
       # relaties:
-      deel van:
+      gewogen met:
+        range: Wegingsfactor
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      weging van:
         range: Systeemtarief
         required: true
         multivalued: false
@@ -51,8 +53,8 @@ classes:
     unique_keys:
       identificatie:
         unique_key_slots:
-          - deel van
-          - tariefsoort
+          - gewogen met
+          - weging van
   Systeemtarief:
     class_uri: Systeemtarief
     broad_mappings:
@@ -62,24 +64,16 @@ classes:
       tijdlijn_geldigheid: true
       tijdlijn_registratie: true
     attributes:
-      bedrag:
-        description: hoeveelheid euro's
-        comments:
-          - Verplicht bij alle tariefsoorten behalve `VA-TA`.
-        range: Decimaal getal
       EAN-code:
         description: unieke cijfercombinatie volgens de Europese Artikelnummer-standaard
         required: true
         range: Code
-      # relaties:
-      gewogen met:
+      tariefhoogte:
+        description: numerieke monetaire omvang per rekeneenheid
         comments:
-          - Verplicht bij `VA-TA`, anders verboden.
-        range: Wegingsfactor
-        required: false
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
+          - Verplicht bij alle tariefsoorten behalve `VA-TA`.
+        range: Decimaal getal
+      # relaties:
       ingedeeld naar:
         range: Systeemtariefcategorie
         required: true
@@ -96,7 +90,6 @@ classes:
       identificatie:
         unique_key_slots:
           - EAN-code
-          - gewogen met
   Systeemtariefcategorie:
     class_uri: Systeemtariefcategorie
     broad_mappings:
@@ -117,24 +110,47 @@ classes:
           - begrip:bwjrm #energiedrager
         required: true
         range: Energiedrager
+      identificatie:
+        description: unieke aanduiding waarmee iets binnen een gegeven context ondubbelzinnig herkenbaar is
+        range: Code
+        required: true
       tariefsoort:
         description: classificatie van de dienst waarvoor het tarief geldt
         required: true
         range: Systeemtariefsoort
-      transporttariefcategorie:
-        description: verzameling aansluitingen waarover transportafhankelijke kosten worden verdeeld
-        comments:
-          - Voorheen bekend als afnemerscategorie.
-        see_also:
-          - tce:bijlage=6&g=2026-07-09
-          - tcg:hoofdstuk=2&paragraaf=2.4&artikel=2.22&g=2026-05-28
-        range: Code
     unique_keys:
       identificatie:
         unique_key_slots:
-          - energiedrager
-          - tariefsoort
-          - transporttariefcategorie
+          - identificatie
+  Tariefcomponent:
+    class_uri: Tariefcomponent
+    broad_mappings:
+      - begrip:gnhiy #aansluiting
+    description: onderdeel van een systeemtarief, gebaseerd op een intern basistarief, dienend om de uiteindelijke vergoeding te kunnen herleiden naar dat basistarief
+    annotations:
+      tijdlijn_geldigheid: true
+      tijdlijn_registratie: true
+    attributes:
+      soort:
+        description: classificatie van de dienst waarvoor het deeltarief geldt
+        range: Tariefcomponentsoort
+        required: true
+      tariefhoogte:
+        description: numerieke monetaire omvang per rekeneenheid
+        required: true
+        range: Decimaal getal
+      # relaties:
+      deel van:
+        range: Systeemtarief
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+    unique_keys:
+      identificatie:
+        unique_key_slots:
+          - deel van
+          - soort
   Transporttariefperiode:
     class_uri: Transporttariefperiode
     broad_mappings:
@@ -207,7 +223,7 @@ enums:
       elektriciteit:
       gas:
       waterstof:
-  Deeltariefsoort:
+  Tariefcomponentsoort:
     permissible_values:
       PAV:
         description: periodieke aansluitvergoeding
