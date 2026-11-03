@@ -37,9 +37,9 @@ classes:
         description: hoeveelheid euro's
         required: true
         range: Decimaal getal
-      soort:
+      tariefsoort:
         description: classificatie van de dienst waarvoor het deeltarief geldt
-        range: Soort deeltarief
+        range: Deeltariefsoort
         required: true
       # relaties:
       deel van:
@@ -52,7 +52,7 @@ classes:
       identificatie:
         unique_key_slots:
           - deel van
-          - soort
+          - tariefsoort
   Systeemtarief:
     class_uri: Systeemtarief
     broad_mappings:
@@ -207,7 +207,7 @@ enums:
       elektriciteit:
       gas:
       waterstof:
-  Soort deeltarief:
+  Deeltariefsoort:
     permissible_values:
       PAV:
         description: periodieke aansluitvergoeding
