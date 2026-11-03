@@ -49,6 +49,7 @@ annotations:
     - `profielcategorie` --> `profielcategoriecode` (nieuwe regelgeving waarin het `vastgesteld afnametype` onderdeel uitmaakt van de profielcategorie)
     - `unieke EAN-code bij MLOEA` vervallen (zoals aangekondigd)
     - `Tarieftoepassing` vervangen door een directe relatie naar `Systeemtarief` (n.a.v. tijdsafhankelijke transporttarieven)
+    - `leveringsrichting` toegevoegd (ontbrak)
 
 classes:
   Aansluiting:
@@ -359,6 +360,10 @@ classes:
         range: Fysieke status allocatiepunt
         annotations:
           personal_data: true
+      leveringsrichting:
+        description: door de netbeheerder verwachte richting van energie-uitwisseling
+        range: Energierichting
+        multivalued: true
       maand verbruiksbepaling:
         description: maand waarin de verbruiksbepaling plaatsvindt
         range: Geheel getal
@@ -546,10 +551,11 @@ classes:
           - begrip:yn3hb #energierichting
         comments:
           - "Voor elektriciteit geldt over het algemeen: combinatie. Voor gas geldt over het algemeen: indien profielcategorie GIS of GIN dan invoeding anders afname."
-          - "De betekenis van het historische 'leveringsrichting' was net iets anders: de richting waarin de energie niet mogelijk maar daadwerkelijk stroomt. Energieleveranciers wisten dan wat ze konden verwachten. Dat gegeven is echter afleidbaar uit het energie-uitwisselingsregister en eventueel installatieregister."
+          - "De betekenis van `leveringsrichting` is net iets anders: de richting waarin de energie niet mogelijk maar naar verwachting stroomt."
         see_also:
           - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2023-04-01
         range: Energierichting
+        multivalued: true
       leveringsdruk gegarandeerd:
         description: geeft aan of door een aangeslotene een vaste druk is aangevraagd op het overdrachtspunt
         comments:
@@ -930,8 +936,6 @@ enums:
     permissible_values:
       afname:
         meaning: begrip:3j33z #afname
-      combinatie:
-        description: afname en invoeding
       invoeding:
         meaning: begrip:j8cpp #invoeding
   Flensdrukklasse:

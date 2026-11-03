@@ -19,7 +19,8 @@ imports:
 default_range: Tekst
 annotations:
   changes: |
-    - `Netkoppeling` toegevoegd.
+    - `Systeemkoppeling` toegevoegd.
+    - `dynamisch of tijdsafhankelijk` toegevoegd.
 
 classes:
   Leveringsovereenkomst:
@@ -34,6 +35,10 @@ classes:
       tijdlijn_registratie: true
       tijdlijn_effectuering: true
     attributes:
+      dynamisch of tijdsafhankelijk:
+        description: geeft aan of de prijs voor geleverde of teruggeleverde energie afhankelijk is van het moment waarop het leveren of terugleveren plaatsvindt, waarbij de prijsperiodes afwijken van de normaal- en laaguren
+        range: Waarheidswaarde
+        required: true
       einddatum:
         description: dag waarop de overeenkomst afloopt dan wel automatisch wordt verlengd
         range: Datum
@@ -75,7 +80,7 @@ classes:
         exactly_one_of:
           - range: Aansluiting
           - range: Allocatiepunt
-          - range: Netkoppeling
+          - range: Systeemkoppeling
         required: true
         multivalued: false
         annotations:
@@ -125,8 +130,8 @@ classes:
     class_uri: marktpartijenregister:Marktpartijsubregistratie
     annotations:
       external_registry: Marktpartijenregister
-  Netkoppeling:
-    class_uri: aansluitingenregister:netkoppeling
+  Systeemkoppeling:
+    class_uri: aansluitingenregister:systeemkoppeling
     annotations:
       external_registry: Aansluitingenregister
 
