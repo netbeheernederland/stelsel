@@ -11,6 +11,6 @@ De hier beschreven modellen zorgen voor een gedeeld begrip, onafhankelijk van de
 
 ## Stelselplaat
 
-Deze plaat toont hoe de registers met elkaar samenhangen. De kleuren zijn gebaseerd op [NBility](https://nbility.netbeheernederland.nl/).
+Het stelsel is modulair opgezet aan de hand van [NBility](https://nbility.netbeheernederland.nl/), de referentiearchitectuur voor netbeheerders. Elk registermodel beschrijft een afgebakend domein en kan onafhankelijk evolueren.
 
 ![Stelselplaat]({{ site.baseurl }}/assets/images/stelselplaat.drawio.svg)

@@ -5,7 +5,7 @@ nav_order: 7
 
 # Relatie met wet- en regelgeving
 
-Registers spelen een centrale rol in de energiesector en in de wetgeving. Toch is de relatie tussen 'registers' in wet- en regelgeving en de registers op deze website niet één-op-één, maar veel-op-veel. Op deze pagina lichten wij het verschil in benadering toe en bieden wij een interpretatieve vertaling van de wetgeving naar onze registermodellen.
+Registers spelen een centrale rol in de energiesector en in de wetgeving. Toch is de relatie tussen 'registers' in wet- en regelgeving en de registers op deze website niet één-op-één, maar veel-op-veel. Op deze pagina lichten wij het verschil in benadering toe en bieden wij een vertaling van de wetgeving naar onze registermodellen.
 
 ## Verschil in benadering
 
@@ -13,7 +13,7 @@ De [Toelichting bij de Regeling gegevensuitwisseling Energiewet](https://www.int
 
 > Relevant is nog te melden dat de Energiewet een ruime begripsbepaling hanteert voor het begrip 'register', namelijk 'gestructureerd geheel van gegevens die volgens bepaalde criteria toegankelijk zijn, ongeacht of dit geheel gecentraliseerd of gedecentraliseerd is, dan wel op functionele of geografische gronden is verspreid'. Beoogd is met deze ruime begripsbepaling de verschillende praktijktoepassingen te omvatten en vooral duidelijkheid te verschaffen in rollen en verantwoordelijkheden. De technische en organisatorische vorm van een (sub)register, de onderliggende techniek (IT) en hoelang gegevens daar wel of niet deel van uitmaken, is in deze context minder van belang. Ook hoeven gegevens technisch gezien niet in hetzelfde register te zijn opgenomen, enkel omdat de Energiewet of de RGE dit binnen bepaalde artikelen clustert of koppelt aan bijvoorbeeld de term 'aansluitingenregister'. De Energiewet spreekt verder over register in het enkelvoud, maar hiervoor kunnen in de praktijk ook meerdere registers worden ingezet.
 
-Voor een betrouwbare informatievoorziening is het van belang dat elk gegeven één duidelijke bron heeft. Op deze website hanteren wij daarom een meer nauwe definitie van 'register': de plek waar een gegeven autoritatief wordt beheerd.
+Voor een betrouwbare informatievoorziening is het van belang dat elk gegeven één duidelijke bron heeft. Op deze website hanteren wij daarom een meer nauwe definitie van 'register', modulair ingedeeld op basis van [NBility](https://nbility.netbeheernederland.nl/): de plek waar een gegeven autoritatief wordt beheerd.
 
 Deze benadering is conform het overheidsbrede principe [data bij de bron](https://www.digitaleoverheid.nl/overzicht-van-alle-onderwerpen/data/data-bij-de-bron/). Hiermee voorkomen wij fouten door onnodige kopieerslagen en kunnen we data gemakkelijker beschermen, corrigeren en beheren.
 

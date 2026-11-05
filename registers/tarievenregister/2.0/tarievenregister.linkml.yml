@@ -3,6 +3,11 @@ name: tarievenregister
 title: Tarievenregister
 version: 2.0-draft
 description: Het tarievenregister legt de tarieven vast die als grondslag dienen voor leveranciers om namens systeembeheerders kosten in rekening te brengen bij aangeslotenen.
+comments:
+  - |
+    Vragen aan domeinexperts die tijdens de volgende sessie worden toegelicht:
+    - Zullen we `verbruiksonafhankelijk systeemtarief` veranderen in `verbruiksonafhankelijk periodiek systeemtarief` om de tarieven voor de eenmalige aansluitvergoeding expliciet uit te sluiten?
+    - Bij kleinverbruik lijkt er zowel voor gas als elektriciteit geen sprake te zijn van een `TAVT`. Klopt dat?
 see_also:
   - er:hoofdstuk=2&afdeling=2.3&artikel=2.35&g=2026-09-02
   - tce:g=2026-07-09
@@ -28,7 +33,7 @@ classes:
   Gewogen tariefhoogte:
     class_uri: Gewogen-tariefhoogte
     broad_mappings:
-      - begrip:gnhiy #aansluiting
+      - begrip:cyq9r #systeemtarief
     description: met een wegingsfactor vermenigvuldigde tariefhoogte
     annotations:
       tijdlijn_geldigheid: true
@@ -58,9 +63,8 @@ classes:
           - weging van
   Systeemtarief:
     class_uri: Systeemtarief
-    broad_mappings:
-      - begrip:gnhiy #aansluiting
-    description: vastgesteld bedrag per eenheid voor een dienst van de systeembeheerder
+    exact_mappings:
+      - begrip:cyq9r #systeemtarief
     annotations:
       tijdlijn_geldigheid: true
       tijdlijn_registratie: true
@@ -76,7 +80,7 @@ classes:
         range: Decimaal getal
       # relaties:
       ingedeeld naar:
-        range: Systeemtariefcategorie
+        range: Tariefcategorie
         required: true
         multivalued: false
         annotations:
@@ -91,11 +95,11 @@ classes:
       identificatie:
         unique_key_slots:
           - EAN-code
-  Systeemtariefcategorie:
-    class_uri: Systeemtariefcategorie
-    broad_mappings:
-      - begrip:gnhiy #aansluiting
-    description: verzameling systeemtarieven met dezelfde eigenschappen
+  Tariefcategorie:
+    class_uri: Tariefcategorie
+    related_mappings:
+      - begrip:cyq9r #systeemtarief
+    description: verzameling tarieven met dezelfde eigenschappen
     annotations:
       tijdlijn_geldigheid: true
       tijdlijn_registratie: true
@@ -126,7 +130,7 @@ classes:
   Tariefcomponent:
     class_uri: Tariefcomponent
     broad_mappings:
-      - begrip:gnhiy #aansluiting
+      - begrip:cyq9r #systeemtarief
     description: deeltarief binnen een samengesteld systeemtarief dat is gebaseerd op één elementair tarief
     comments:
       - Een tariefcomponent deelt dezelfde tariefsoort (zoals `PAV` of `MT`) met het onderliggende elementaire tarief (het interne basistarief van de netbeheerder).
@@ -158,10 +162,8 @@ classes:
           - soort
   Transporttariefperiode:
     class_uri: Transporttariefperiode
-    broad_mappings:
-      - begrip:gnhiy #aansluiting
-    description: aaneengesloten periode waarbinnen eenzelfde tijdsafhankelijk tarief voor transportkosten van toepassing is
-    source: rge:#
+    exact_mappings:
+      - begrip:t2df3 #transporttariefperiode
     annotations:
       tijdlijn_geldigheid: true
       tijdlijn_registratie: true
@@ -197,7 +199,7 @@ classes:
   Wegingsfactor:
     class_uri: Wegingsfactor
     broad_mappings:
-      - begrip:gnhiy #aansluiting
+      - begrip:t2df3 #transporttariefperiode
     description: relatief gewicht van een tarief
     annotations:
       tijdlijn_geldigheid: true
@@ -235,20 +237,16 @@ enums:
   Tariefcomponentsoort:
     permissible_values:
       PAV:
-        description: periodieke aansluitvergoeding
-      TAVT:
-        description: transportafhankelijk transporttarief
-        comments:
-          - Geldt niet voor elektriciteit.
+        meaning: begrip:z37a3 #periodieke aansluitvergoeding
       TOVT:
-        description: transportonafhankelijk transporttarief
+        meaning: begrip:qyewj #transportonafhankelijk transporttarief
       MT:
-        description: meettarief
+        meaning: begrip:ee4qa #meettarief
   Systeemtariefsoort:
     permissible_values:
       VO:
-        description: verbruiksonafhankelijk systeemtarief
+        meaning: begrip:jn6a3 #verbruiksonafhankelijk periodiek systeemtarief
       VA-TA:
-        description: verbruiksafhankelijk tijdsafhankelijk transporttarief
+        meaning: begrip:7jthh #verbruiksafhankelijk tijdsafhankelijk transporttarief
       VA-NTA:
-        description: verbruiksafhankelijk niet-tijdsafhankelijk transporttarief
+        meaning: begrip:3twby #verbruiksafhankelijk niet-tijdsafhankelijk transporttarief

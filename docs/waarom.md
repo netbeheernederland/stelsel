@@ -20,6 +20,8 @@ Zonder expliciete afspraken over betekenis ontstaan verschillen in interpretatie
 
 Dit leidt tot herhaald herstelwerk, trage afstemming en onduidelijke verantwoordelijkheid.
 
+Wij bepalen deze betekenis echter niet zelf. Onze taak is het formaliseren van wat institutioneel al geldt in wetgeving, marktcodes en sectorbesluiten.
+
 ## Onze kernvraag
 
 De modellen in dit stelsel zijn opgebouwd rond één centrale vraag:
