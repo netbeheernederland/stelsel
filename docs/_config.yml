@@ -9,7 +9,7 @@ collections:
 just_the_docs:
   collections:
     registers:
-      name: Registers
+      name: Registermodellen
 
 defaults:
   - scope:

@@ -19,6 +19,9 @@ types:
   Decimaal getal:
     description: exact afgesproken numerieke waarde
 
+  Kloktijd:
+    description: tijd die de klok volgens de ter plaatse geldende regels aangeeft, zonder kalenderdatum
+
   Waarheidswaarde:
     description: aanduiding die één van twee elkaar uitsluitende waarden kan aannemen
 

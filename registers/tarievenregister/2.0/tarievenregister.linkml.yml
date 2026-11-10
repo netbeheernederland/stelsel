@@ -168,16 +168,16 @@ classes:
       tijdlijn_geldigheid: true
       tijdlijn_registratie: true
     attributes:
-      aanvangsuur:
-        description: heel uur van de dag waarop een periode van 60 minuten begint
-        comments:
-          - Representatie volgt ISO 8601 met waarden 0 tot en met 23 (lokale tijd).
-        required: true
-        range: Geheel getal
       kalendermaand:
         description: periode die loopt van de eerste tot en met de laatste dag van een van de twaalf maanden van een kalenderjaar
         comments:
           - Representatie volgt ISO 8601 met waarden 1 (januari) tot en met 12 (december).
+        required: true
+        range: Geheel getal
+      uur van de dag:
+        description: periode van 60 minuten binnen een kalenderdag, geïdentificeerd door het aantal volledige uren dat is verstreken sinds het begin van die dag (middernacht)
+        comments:
+          - Representatie volgt ISO 8601 met waarden 0 tot en met 23 (lokale tijd).
         required: true
         range: Geheel getal
       werkdag:
