@@ -4,7 +4,6 @@ title: Tarievenregister
 version: 2.0-draft
 description: Het tarievenregister legt de tarieven vast die als grondslag dienen voor leveranciers om namens systeembeheerders kosten in rekening te brengen bij aangeslotenen.
 comments:
-  - "Te verwerken in legenda en uitleg over tijdlijnen: een kloksymbool op een relatie betekent een verwijzing naar een bepaalde versie in de tijd."
   - |
     Vragen aan domeinexperts die tijdens de volgende sessie worden toegelicht:
     - Zullen we `verbruiksonafhankelijk systeemtarief` veranderen in `verbruiksonafhankelijk periodiek systeemtarief` om de tarieven voor de eenmalige aansluitvergoeding expliciet uit te sluiten?
@@ -56,6 +55,7 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
+          volgt_tijdlijn_geldigheid: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -67,7 +67,6 @@ classes:
       - begrip:cyq9r #systeemtarief
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     attributes:
       EAN-code:
         description: unieke cijfercombinatie volgens de Europese Artikelnummer-standaard
@@ -102,7 +101,6 @@ classes:
     description: verzameling tarieven met dezelfde eigenschappen
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     attributes:
       eenheid:
         description: maat waarin een grootheid numeriek kan worden uitgedrukt
@@ -152,6 +150,7 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
+          volgt_tijdlijn_geldigheid: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -203,7 +202,6 @@ classes:
     description: relatief gewicht van een tarief
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     attributes:
       categorie:
         description: identificatie van een wegingsfactor

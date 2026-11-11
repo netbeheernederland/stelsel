@@ -35,14 +35,14 @@
 {%- macro key_symbol(class, slot) -%}
     {%- for key in class.unique_keys -%}
         {%- if slot.name in class.unique_keys[key].unique_key_slots -%}
-            <span title="Maakt deel uit van de identificatie">🔑</span>&nbsp;
+            <span title="Maakt deel uit van de identificatie">🔑</span>
         {%- endif -%}
     {%- endfor -%}
 {%- endmacro -%}
 
-{%- macro privacy_symbol(slot) -%}
-    {%- if slot.annotations.personal_data -%}
-        &nbsp;<span title="Persoonsgegeven">👤</span>
+{%- macro clock_symbol(element) -%}
+    {%- if element.annotations.volgt_tijdlijn_geldigheid -%}
+        <span title="Volgt de geldigheidstijdlijn">⏲</span>
     {%- endif -%}
 {%- endmacro -%}
 
@@ -163,21 +163,9 @@
         {%- set _ = parts.items.append('Gaat vervallen: ' ~ element.deprecated) -%}
     {%- endif -%}
 
-    {# tijdlijnen #}
-    {%- set tijdlijn_annotaties = [] -%}
-    {%- for a in element.annotations -%}
-        {%- if a.startswith('tijdlijn_') and element.annotations[a].value|string|lower == "true" -%}
-            {%- set _ = tijdlijn_annotaties.append(a|replace('tijdlijn_', '')) -%}
-        {%- elif a == 'levensduur' and element.annotations[a].value|string|lower == "true" -%}
-            {%- if element.annotations.levensduur_begin and element.annotations.levensduur_einde -%}
-                {%- set _ = tijdlijn_annotaties.append(a ~ ' (' ~ element.annotations.levensduur_begin.value ~ ', ' ~ element.annotations.levensduur_einde.value ~ ')') -%}
-            {%- else -%}
-                {%- set _ = tijdlijn_annotaties.append(a) -%}
-            {%- endif -%}
-        {%- endif -%}
-    {%- endfor -%}
-    {%- if tijdlijn_annotaties -%}
-        {%- set _ = parts.items.append('Tijdlijnen: ' ~ tijdlijn_annotaties|join(', ')) -%}
+    {# tijdlijn geldigheid#}
+    {%- if element.annotations.tijdlijn_geldigheid -%}
+        {%- set _ = parts.items.append('Met geldigheidstijdlijn') -%}
     {%- endif -%}
 
     {# see_also #}
@@ -254,7 +242,7 @@ parent: "{{schema.title}}"
 | Eigenschap | Omschrijving |
 | :--- | :--- |
 {% for slot in properties -%}
-| <span class="fw-500">{{slot.name}}</span><br/><span class="fw-300">{{key_symbol(class, slot)}}{{compute_range(slot)}} [{{gen.cardinality(slot)}}]{{privacy_symbol(slot)}}</span> | {{omschrijving(slot)}} |
+| <span class="fw-500">{{slot.name}}</span><br/><span class="fw-300">{{key_symbol(class, slot)}} {{compute_range(slot)}} [{{gen.cardinality(slot)}}]</span> | {{omschrijving(slot)}} |
 {% endfor %}
 {% endif %}
 
@@ -265,7 +253,7 @@ parent: "{{schema.title}}"
 | {{class.name}} is ... | Omschrijving |
 | :---  | :--- |
 {% for slot in relationships -%}
-| {{key_symbol(class, slot)}}{{slot.name}} {{compute_range(slot)}} [{% if slot.annotations.inverse_cardinality %}{{slot.annotations.inverse_cardinality.value}}{% endif %} → {{gen.cardinality(slot)}}]{{privacy_symbol(slot)}} | {{omschrijving(slot)}} |
+| {{key_symbol(class, slot)}}{{clock_symbol(slot)}} {{slot.name}} {{compute_range(slot)}} [{% if slot.annotations.inverse_cardinality %}{{slot.annotations.inverse_cardinality.value}}{% endif %} → {{gen.cardinality(slot)}}] | {{omschrijving(slot)}} |
 {% endfor %}
 {% endif %}
 

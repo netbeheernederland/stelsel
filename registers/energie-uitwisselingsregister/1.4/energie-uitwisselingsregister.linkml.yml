@@ -54,8 +54,6 @@ classes:
     related_mappings:
       - begrip:tibcm #energie-uitwisseling
     description: etmaalgemiddelde effectieve temperatuur, berekend op basis van de gemiddelde temperatuur en windsnelheid, die wordt gebruikt voor gasallocatieprocessen
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - beginmoment
       - eindmoment
@@ -87,8 +85,6 @@ classes:
     related_mappings:
       - begrip:tibcm #energie-uitwisseling
     description: maandgemiddelde correctiefactor die de hoeveelheid verbruikt gas (in m3) omzet naar energie (m3(n;35;17)), op basis van de calorische waarde van het gas in een specifiek systeemgebied
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - beginmoment
       - eindmoment
@@ -113,8 +109,6 @@ classes:
     description: formele betwisting van de juistheid van een vastgestelde meterstand
     comments:
       - De partij die de originele meterstand heeft vastgesteld heet de 'initiërende partij'. De partij die een dispuutmelding indient, heet de 'wederpartij'.
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - herkomstindicatie
     attributes:
@@ -198,7 +192,6 @@ classes:
     source: bcg2026:g=2026-02-21
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     slots:
       - waarde
     attributes:
@@ -218,8 +211,6 @@ classes:
     related_mappings:
       - begrip:tibcm #energie-uitwisseling
     description: per systeemgebied gewogen gemiddelde hoeveelheid energie die vrijkomt bij verbranding per eenheid van volume
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - beginmoment
       - eindmoment
@@ -246,8 +237,6 @@ classes:
       - herkomstindicatie
       - meetsoort
       - waarde
-    annotations:
-      tijdlijn_registratie: true
     attributes:
       moment:
         description: tijdstip
@@ -272,8 +261,6 @@ classes:
     description: werkelijk voorgekomen maximale belasting van het net door een aangeslotene op een netaansluiting
     comments:
       - Bij elektriciteit bekend als kWmax.
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - beginmoment
       - eindmoment
@@ -309,8 +296,6 @@ classes:
       - begrip:tibcm #energie-uitwisseling
     description: energie opgewekt in een installatie van een aangeslotene
     source: rgvo:g=2026-09-02
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - beginmoment
       - eindmoment
@@ -342,8 +327,6 @@ classes:
     related_mappings:
       - begrip:tibcm #energie-uitwisseling
     description: relatief deel van uitgewisseld volume in een kalenderjaar
-    annotations:
-      tijdlijn_registratie: true
   Profielfractie gas:
     class_uri: Profielfractie-gas
     is_a: Profielfractie
@@ -387,8 +370,6 @@ classes:
       - Niet te verwarren met restantvolume.
     see_also:
       - mcg:hoofdstuk=5&paragraaf=5.2&artikel=5.2.3&g=2025-05-08
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - beginmoment
       - eindmoment
@@ -454,7 +435,6 @@ classes:
       - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2025-01-01
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     slots:
       - energierichting
       - tariefperiode
@@ -494,8 +474,6 @@ classes:
     broad_mappings:
       - begrip:tibcm #energie-uitwisseling
     description: hoeveelheid of kwaliteit van energie, uitgewisseld met een energienet
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - beginmoment
       - eindmoment

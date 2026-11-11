@@ -70,31 +70,21 @@ classes:
       achternaam:
         description: naam die van geslacht op geslacht en indien gewenst door het huwelijk overgedragen wordt, inclusief een eventueel voorvoegsel
         required: true
-        annotations:
-          personal_data: true
       e-mailadres:
         description: uniek adres voor digitaal, elektronisch postverkeer
         range: Code
         required: true
-        annotations:
-          personal_data: true
       nummer:
         description: identificatie van de contactpersoon
         range: Code
         required: true
-        annotations:
-          personal_data: true
       roepnaam:
         description: gebruikelijke aanspreeknaam
         required: true
-        annotations:
-          personal_data: true
       telefoonnummer:
         description: uniek nummer dat wordt toegekend wordt om een aansluiting op het publieke telefoonnet te identificeren
         range: Code
         required: true
-        annotations:
-          personal_data: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -164,13 +154,9 @@ classes:
     attributes:
       adresregel t.a.v.:
         description: toevoeging aan een adres die aangeeft voor wie de post specifiek bedoeld is binnen een organisatie of op een adres
-        annotations:
-          personal_data: true
       e-mailadres:
         description: uniek adres voor digitaal, elektronisch postverkeer
         range: Code
-        annotations:
-          personal_data: true
       onderwerp:
         description: korte omschrijving van de reden of het doel van de factuur
         required: true
@@ -193,8 +179,9 @@ classes:
     description: toewijzing van een bedrijfs-EAN-code aan een onderneming
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      levensduur: true
+    slots:
+      - toelatingsdatum
+      - beëindigingsdatum
     attributes:
       bedrijfs-EAN-code:
         description: identificatie van een onderneming in het berichtenverkeer
@@ -236,10 +223,11 @@ classes:
     broad_mappings:
       - begrip:hc9px #marktpartij
     description: onderverdeling van een marktpartijregistratie, waardoor gegevens voor die eenheid apart kunnen worden gegroepeerd
-    annotations:
-      levensduur: true
     see_also:
       - iceg:hoofdstuk=8&paragraaf=8.2&artikel=8.2.1&g=2025-01-01
+    slots:
+      - toelatingsdatum
+      - beëindigingsdatum
     attributes:
       afdrachtmethode:
         description: door een leverancier gekozen manier om systeemkosten af te dragen aan de systeembeheerder
@@ -284,13 +272,18 @@ classes:
     class_uri: Marktrolbeschikking
     broad_mappings:
       - begrip:hc9px #marktpartij
-    annotations:
-      levensduur: true
     description: officiële toestemming (ontheffing, vergunning of erkenning) aan een onderneming voor een bepaalde categorie van activiteiten op de Nederlandse energiemarkt
     attributes:
+      intrekkingsdatum:
+        description: dag waarop de beschikking is ingetrokken
+        range: Datum
       referentie:
         description: bijvoorbeeld een ACM-besluitnummer
         range: Code
+      verleningsdatum:
+        description: dag waarop de beschikking is verleend
+        range: Datum
+        required: true
       # relaties:
       ingedeeld naar:
         range: Soort marktrolbeschikking
@@ -316,7 +309,6 @@ classes:
     description: voorrang die is verleend door een programmaverantwoordelijke aan een leverancier of andersom en die van toepassing is tijdens een leveringszekerheidsprocedure
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     slots:
       - energiedrager
     slot_usage:
@@ -366,10 +358,17 @@ classes:
       external_registry: Registers van ondernemingen 
 
 slots:
+  beëindigingsdatum:
+    description: dag waarop de registratie is beëindigd
+    range: Datum
   energiedrager:
     exact_mappings:
       - begrip:bwjrm
     range: Energiedrager
+  toelatingsdatum:
+    description: dag waarop de registratie is toegelaten
+    range: Datum
+    required: true
 
 enums:
   Afdrachtmethode:

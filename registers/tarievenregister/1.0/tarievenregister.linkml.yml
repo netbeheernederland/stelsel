@@ -39,7 +39,6 @@ classes:
       - De combinatie van netbeheerder, afnemerscategorie en soort is uniek.
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     slots:
       - afnemerscategorie
       - EAN-code
@@ -72,7 +71,6 @@ classes:
       - De combinatie van netbeheerder, afnemerscategorie en soort is uniek.
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     slots:
       - afnemerscategorie
       - EAN-code

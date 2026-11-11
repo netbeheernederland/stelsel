@@ -28,8 +28,6 @@ classes:
       - begrip:xbzft #energietoerekening
     comments:
       - De lijst van eigenschappen is nog niet volledig.
-    annotations:
-      tijdlijn_registratie: true
     attributes:
       identificatie:
         description: unieke aanduiding waarmee iets binnen een gegeven context ondubbelzinnig herkenbaar is
@@ -46,8 +44,6 @@ classes:
     description: uitgewisselde energie op een aansluiting, waarvan is verklaard dat zij een marktpartij toekomt
     comments:
       - Ook wel bekend als individueel allocatievolume.
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - allocatiegroep
       - beginmoment
@@ -113,8 +109,6 @@ classes:
     description: uitgewisselde energie met een netgebied, waarvan is verklaard dat zij een marktpartij toekomt
     comments:
       - Ook wel bekend als geaggregeerd allocatievolume dan wel reconciliatievolume.
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - allocatiegroep
       - eenheid
@@ -178,8 +172,6 @@ classes:
     source: bcg:g=2021-06-01
     see_also:
       - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.5&z=2025-01-01&g=2025-01-01
-    annotations:
-      tijdlijn_registratie: true
     attributes:
       waarde:
         description: hoeveelheid m3(n;35,17)/uur
@@ -206,8 +198,6 @@ classes:
     see_also:
       - nce:bijlage=18&g=2025-12-31
       - acg:g=2025-05-08
-    annotations:
-      tijdlijn_registratie: true
     attributes:
       waarde:
         description: hoeveelheid waarmee vermenigvuldigd moet worden
@@ -229,8 +219,6 @@ classes:
     broad_mappings:
       - begrip:xbzft #energietoerekening
     description: reeks opeenvolgende berekeningen
-    annotations:
-      tijdlijn_registratie: true
     slots:
       - proces
     attributes:
@@ -255,8 +243,6 @@ classes:
     broad_mappings:
       - begrip:xbzft #energietoerekening
     description: getal waarmee het via een netgebied getransporteerde volume vermenigvuldigd moet worden om het transportafhankelijk netverlies (transportverbruik, TVB) te bepalen
-    annotations:
-      tijdlijn_registratie: true
     attributes:
       waarde:
         description: hoeveelheid waarmee vermenigvuldigd moet worden

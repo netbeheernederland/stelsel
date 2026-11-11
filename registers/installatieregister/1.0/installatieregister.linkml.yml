@@ -30,8 +30,6 @@ annotations:
 classes:
   Aanmelder:
     class_uri: Aanmelder
-    annotations:
-      tijdlijn_registratie: true
     description: natuurlijke persoon of organisatie die een elektriciteitsinstallatie ter registratie opgeeft
     attributes:
       soort:
@@ -66,8 +64,6 @@ classes:
     class_uri: Beveiligingsinstelling
     broad_mappings:
       - begrip:gtj7b #installatie
-    annotations:
-      tijdlijn_registratie: true
     description: manier waarop door de elektriciteitsinstallatie-eenheid wordt beschermd tegen storingen
     attributes:
       onregelmatigheid:
@@ -103,8 +99,6 @@ classes:
     class_uri: Conformiteitscertificaat
     broad_mappings:
       - begrip:gtj7b #installatie
-    annotations:
-      tijdlijn_registratie: true
     description: door een erkende certificerende instantie verstrekt document voor apparatuur die wordt gebruikt door een elektriciteitsproductie-eenheid, verbruikseenheid, distributiesysteem, verbruikersinstallatie of HVDC-systeem
     source: celex:32016R0631
     slots:
@@ -119,11 +113,6 @@ classes:
     class_uri: Elektriciteitsinstallatie-eenheid
     broad_mappings:
       - begrip:gtj7b #installatie
-    annotations:
-      tijdlijn_registratie: true
-      levensduur: true
-      levensduur_begin: moment van inbedrijfname
-      levensduur_einde: moment van uitbedrijfname
     description: ondeelbaar geheel van elektrisch materieel en leidingen die samen elektrische energie kunnen verbruiken, opwekken, opslaan, laden of ontladen
     source: celex:32016R0631
     slots:
@@ -131,7 +120,7 @@ classes:
     slot_usage:
       EAN-code:
         see_also:
-          - nce:hoofdstuk=2&paragraaf=2.1&artikel=2.4&g=2024-07-05
+          - nce:artikel=2.4&g=2024-07-05
     attributes:
       aansluitspanning op het overdrachtspunt:
         description: nominale spanning op het overdrachtspunt van de aansluiting
@@ -177,6 +166,13 @@ classes:
         range: Reëel getal
         unit:
           ucum_code: '%/s'
+      moment van inbedrijfname:
+        description: moment waarop de eenheid in bedrijf is genomen
+        range: Date
+        required: true
+      moment van uitbedrijfname:
+        description: moment waarop de eenheid uit bedrijf is genomen
+        range: Date
       nominale arbeidsfactor:
         description: verhouding tussen het werkelijke vermogen en het schijnbare vermogen onder nominale bedrijfsomstandigheden
         range: Reëel getal
@@ -276,11 +272,6 @@ classes:
     class_uri: GCvO-installatie
     broad_mappings:
       - begrip:gtj7b #installatie
-    annotations:
-      tijdlijn_registratie: true
-      levensduur: true
-      levensduur_begin: moment van inbedrijfname
-      levensduur_einde: moment van uitbedrijfname
     description: productie-installatie of een op grond van de criteria uit artikel 24 van de Regeling garanties van oorsprong en certificaten van oorsprong afgebakend deel daarvan, die of dat op grond van artikel 16, eerste lid, onderdeel h, van de Elektriciteitswet 1998, of artikel 10, vijfde lid, onderdeel c, van de Gaswet, wordt aangemerkt als een installatie voor de productie van energie als bedoeld in artikel 73, eerste lid van de Elektriciteitswet 1998, of artikel 66i, eerste lid van de Gaswet
     source: bce:g=2025-05-08
     see_also:
@@ -296,6 +287,13 @@ classes:
       hoogrenderende warmtekrachtkoppeling:
         description: geeft aan of sprake is van een installatie voor hoogrenderende warmtekrachtkoppeling (HR-WKK)
         range: Waarheidswaarde
+      moment van inbedrijfname:
+        description: moment waarop de installatie in bedrijf is genomen
+        range: Date
+        required: true
+      moment van uitbedrijfname:
+        description: moment waarop de installatie uit bedrijf is genomen
+        range: Date
       subsidie:
         description: geeft aan of de GCvO-installatie overheidssteun ontvangt of geniet
         range: Waarheidswaarde
@@ -316,8 +314,6 @@ classes:
     class_uri: Groep-van-omvormers
     broad_mappings:
       - begrip:gtj7b #installatie
-    annotations:
-      tijdlijn_registratie: true
     description: verzameling elektronische apparaten die de invoerspanning van een bepaalde spanning naar een andere spanning kunnen omvormen of elektrische energie in energie van een andere frequentie
     comments:
       - De ACM beschouwt een groep zonnepanelen achter één omvormer, samen met die omvormer als een elektriciteitsproductie-eenheid (ACM/18/033360). Aanmeldformulieren van netbeheerders staan echter meer omvormers per eenheid toe.
@@ -336,8 +332,6 @@ classes:
     class_uri: Groep-van-opwekkingseenheden
     broad_mappings:
       - begrip:gtj7b #installatie
-    annotations:
-      tijdlijn_registratie: true
     description: verzameling apparaten binnen één elektriciteitsproductie-eenheid die elektrische energie opwekken en identieke kenmerken delen
     slots:
       - fabrikant
@@ -398,8 +392,6 @@ classes:
     class_uri: Soort-transformator
     broad_mappings:
       - begrip:gtj7b #installatie
-    annotations:
-      tijdlijn_registratie: true
     description: verzameling transformatoren die een gemeenschappelijk karakter hebben
     attributes:
       nominaal schijnbaar vermogen:

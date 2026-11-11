@@ -40,7 +40,6 @@ annotations:
   changes: |
     - `administratieve status van meetinrichting` is verplicht, omdat er semantisch geen verschil bestaat tussen `aan` en leeg.
     - `soort` toegevoegd aan `Aansluiting` omdat deze eigenschap nog in gebruik is.
-    - `levensduur` toegevoegd aan `Aansluiting` en `Allocatiepunt` zodat beëindigingen expliciet zijn en betrouwbaar marktprocessen triggeren.
     - `verzoek verlengde bewaartermijn` toegevoegd vanwege nieuwe regelgeving.
     - `Netgebied` --> `Systeemgebied` (nieuwe regelgeving)
     - `Allocatiepunt bij netgebied` --> `Allocatiepunt bij systeemgebied` (nieuwe regelgeving)
@@ -57,19 +56,12 @@ classes:
     exact_mappings:
       - begrip:gnhiy #aansluiting
     annotations:
-      levensduur: true
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     comments:
       - Een koppeling met een gesloten distributiesysteem wordt in dit register beschouwd als aansluiting als de beheerder geen gebruik maakt van het elektronische berichtenverkeer ten behoeve van het faciliteren van derdentoegang (zie artikel 2.4, vierde lid van de Netcode elektriciteit).
     slots:
       - EAN-code
       - energiedrager
-    slot_usage:
-      EAN-code:
-        annotations:
-          personal_data: true
     attributes:
       gecontracteerde transportcapaciteit:
         exact_mappings:
@@ -148,8 +140,6 @@ classes:
       - begrip:3jypg #aansluitlocatie
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     comments:
       - Adresgegevens zijn zo veel mogelijk overeenkomstig NEN 5825.
     see_also:
@@ -160,13 +150,9 @@ classes:
         source: nen:nen-5825-2002-nl-83617
         required: true
         range: Geheel getal
-        annotations:
-          personal_data: true
       huisnummertoevoeging:
         description: aan een verblijfsobject, standplaats of ligplaats toegekende nadere toevoeging aan een huisnummer inclusief huisletter
         source: nen:nen-5825-2002-nl-83617
-        annotations:
-          personal_data: true
       landcode:
         description: identificatie van een land met twee letters conform ISO 3166-1
         source: iso:iso-3166-country-codes.html
@@ -176,12 +162,8 @@ classes:
         description: identificatie van een aansluitlocatie
         required: true
         range: Code
-        annotations:
-          personal_data: true
       locatieomschrijving:
         description: omschrijving van de ligging van een aansluitlocatie, eventueel ten opzichte van een nabijgelegen adres
-        annotations:
-          personal_data: true
       postcode:
         description: reeks tekens die in een postadres wordt opgenomen om het automatisch sorteren van de post gemakkelijker te maken
         source: nen:nen-5825-2002-nl-83617
@@ -196,8 +178,6 @@ classes:
         required: true
       toegangsinstructie:
         description: beschrijving van wat je moet doen om een locatie binnen te kunnen of mogen gaan
-        annotations:
-          personal_data: true
       verdieping toegang:
         description: aanduiding op welke verdieping de toegangsdeur van de aansluitlocatie zich bevindt
         source: adamstelsel:bag-index/catalogus-bag/objectklasse-vbo/kenmerk-bouwlaag/
@@ -214,15 +194,11 @@ classes:
         range: Reëel getal
         unit:
           ucum_code: m
-        annotations:
-          personal_data: true
       y-coördinaat:
         description: noord-zuidpositie van een punt in het Rijksdriehoeksstelsel (RD)
         range: Reëel getal
         unit:
           ucum_code: m
-        annotations:
-          personal_data: true
       # relaties
       in zelfde onroerende zaak als:
         comments:
@@ -239,14 +215,12 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
-          personal_data: true
       in nabijheid van:
         range: Nummeraanduiding
         required: false
         multivalued: false
         annotations:
           inverse_cardinality: "*"
-          personal_data: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -255,10 +229,6 @@ classes:
     class_uri: Aftakking
     broad_mappings:
       - begrip:9sgi2 #netcomponent
-    annotations:
-      tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     description: splitsing van de wikkeling van een transformator
     source: mce:bijlage=3&g=2023-04-01
     see_also:
@@ -282,6 +252,7 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "1..*"
+          volgt_tijdlijn_geldigheid: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -293,10 +264,7 @@ classes:
     exact_mappings:
       - begrip:eyp3g #allocatiepunt
     annotations:
-      levensduur: true
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     slots:
       - EAN-code
     slot_usage:
@@ -305,8 +273,6 @@ classes:
           - "Validatie: bij primair allocatiepunt gelijk aan EAN-code aansluiting, bij additioneel allocatiepunt ongelijk."
         see_also:
           - nce:hoofdstuk=2&paragraaf=2.1&artikel=2.4&g=2022-11-25
-        annotations:
-          personal_data: true
     attributes:
       allocatiemethode:
         # TODO: definitie
@@ -323,8 +289,6 @@ classes:
           - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
           - bce:hoofdstuk=1&artikel=1.1&g=2022-11-25
           - bcg:hoofdstuk=1&artikel=1.1&g=2021-06-01
-        annotations:
-          personal_data: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -340,8 +304,6 @@ classes:
           - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.4&g=2022-12-20
         range: Administratieve status van meetinrichting
         required: true
-        annotations:
-          personal_data: true
       blokkade:
         description: geeft weer of het allocatiepunt en de bijbehorende aansluiting is geblokkeerd voor de automatische verwerking van mutatieprocessen als bedoeld in Hoofdstuk 4 van de Informatiecode elektriciteit en gas
         see_also:
@@ -349,8 +311,6 @@ classes:
           - iceg:hoofdstuk=2&paragraaf=2.12&g=2023-03-18
           - iceg:hoofdstuk=1&paragraaf=1.1&artikel=1.1.14&g=2023-03-18
         range: Blokkade
-        annotations:
-          personal_data: true
       fysieke status:
         description: toestand van door de netbeheerder en eventuele meetverantwoordelijke beheerde onderdelen die samen energie-uitwisseling op het allocatiepunt mogelijk maken
         comments:
@@ -358,8 +318,6 @@ classes:
         see_also:
           - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
         range: Fysieke status allocatiepunt
-        annotations:
-          personal_data: true
       leveringsrichting:
         description: door de netbeheerder verwachte richting van energie-uitwisseling
         range: Energierichting
@@ -375,8 +333,6 @@ classes:
         see_also:
           - rakveg:paragraaf=1&artikel=1a&g=2023-04-01
         range: Reden uit bedrijf
-        annotations:
-          personal_data: true
       type:
         description: geeft weer of het allocatiepunt primair of additioneel is
         source: bce:hoofdstuk=1&artikel=1.1&g=2022-11-25
@@ -389,15 +345,11 @@ classes:
       wijze uit bedrijf:
         description: manier waarop één of meer onderdelen uit bedrijf zijn genomen zodat energie-uitwisseling op het allocatiepunt onmogelijk is
         range: Wijze uit bedrijf
-        annotations:
-          personal_data: true
       wijze van bemeting:
         description: manier waarop het allocatiepunt is bedoeld om te worden bemeten
         see_also:
           - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
         range: Wijze van bemeting
-        annotations:
-          personal_data: true
       # relaties
       toegekend aan:
         range: Aansluiting
@@ -426,10 +378,6 @@ classes:
     class_uri: Groep-van-strengen-van-lichtmasten
     broad_mappings:
       - begrip:3jypg #aansluitlocatie
-    annotations:
-      tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     description: verzameling van strengen van lichtmasten waarvan de aansluitingen eventueel ongeïdentificeerde overdrachtspunten bevatten
     comments:
       - Voorheen werden zogenaamde 'virtuele aansluitingen' geregistreerd (DIM). Dit register staat alleen de registratie van echte aansluitingen toe. De mooiste manier om een streng van lichtmasten te registreren, is als één aansluiting met één primair allocatiepunt en een overdrachtspunt per lichtmast. Is het aantal strengen bekend maar niet de verdeling van lichtmasten over die strengen, dan als één aansluiting/allocatiepunt/overdrachtspunt per streng, met al deze aansluitingen gegroepeerd in een groep van strengen van lichtmasten. Is het ook het aantal strengen niet bekend, dan als één aansluiting/allocatiepunt/overdrachtspunt. Al deze varianten leiden tot eenzelfde nettarief, volgens de afleidingsregels in het tarievenregister.
@@ -448,6 +396,7 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "0..1"
+          volgt_tijdlijn_geldigheid: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -458,8 +407,6 @@ classes:
       - begrip:9sgi2 #netcomponent
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     description: elektrisch apparaat dat wordt toegepast voor het verlagen van spanning of stroom zodat deze gemeten kan worden
     see_also:
       - mce:hoofdstuk=4&paragraaf=4.3&sub-paragraaf=4.3.2&artikel=4.3.2.4&g=2022-10-25
@@ -509,8 +456,6 @@ classes:
     class_uri: Overdrachtspunt
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     exact_mappings:
       - begrip:fqqa7 #overdrachtspunt
     slots:
@@ -534,8 +479,6 @@ classes:
         any_of:
           - range: Niet-numerieke aansluitcapaciteit
           - range: Reëel getal
-        annotations:
-          personal_data: true
       aansluitspanning of leveringsdruk:
         description: nominale spanning of druk op het overdrachtspunt
         comments:
@@ -664,8 +607,6 @@ classes:
       - begrip:9sgi2 #netcomponent
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     description: hulpmiddelen bij een aansluiting waarop het secundaire deel van de meetinrichting is aangesloten
     comments:
       - De naam 'primair deel meetinrichting' kan verwarrend zijn omdat het volgens de Energiewet om hulpmiddelen bij de aansluiting gaat (beheerd door de netbeheerder), niet om een deel van de meetinrichting (beheerd door de meetverantwoordelijke, ook wel het 'secundaire deel' genoemd).
@@ -700,9 +641,6 @@ classes:
     class_uri: Primaire-meetkabel
     broad_mappings:
       - begrip:9sgi2 #netcomponent
-    annotations:
-      tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     description: kabel tussen meettransformator en aansluitklemmen
     source: iceg:hoofdstuk=2&paragraaf=2.11&artikel=2.11.4&g=2023-06-28
     attributes:
@@ -726,6 +664,7 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "1"
+          volgt_tijdlijn_geldigheid: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -765,8 +704,6 @@ classes:
       - begrip:zqagh #systeemgebied
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     see_also:
       - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2022-05-18
     slots:
@@ -792,8 +729,6 @@ classes:
       - begrip:gnhiy #aansluiting
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     description: recht op het gebruik van één of meer verbindingen tussen twee energienetten of tussen een energienet en een interconnector
     source: bcg:hoofdstuk=1&artikel=1.1&g=2021-06-01
     comments:

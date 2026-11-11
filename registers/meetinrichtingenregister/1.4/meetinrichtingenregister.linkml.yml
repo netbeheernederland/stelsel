@@ -34,8 +34,6 @@ classes:
       - begrip:877a7 #meetinrichting
     see_also:
       - iceg:hoofdstuk=4&paragraaf=4.7&sub-paragraaf=4.7.2&g=2025-01-01
-    annotations:
-      tijdlijn_effectuering: true
     attributes:
       capaciteit:
         description: hoeveelheid energie die per tijdseenheid maximaal kan worden getransporteerd door de meetinrichting
@@ -71,8 +69,6 @@ classes:
     class_uri: Kleinverbruikmeetinrichting
     exact_mappings:
       - begrip:rnny7 #kleinverbruikmeetinrichting
-    annotations:
-      tijdlijn_effectuering: true
     attributes:
       aantal telwerken:
         description: hoeveelheid telwerken waarin daadwerkelijk de gemeten hoeveelheid energie wordt vastgelegd en waarvan de stand wordt uitgelezen ten behoeve van de marktprocessen
@@ -140,8 +136,6 @@ classes:
     class_uri: Telwerk
     exact_mappings:
       - begrip:tc4xn #telwerk
-    annotations:
-      tijdlijn_effectuering: true
     attributes:
       aantal posities voor de komma:
         description: maximaal aantal posities in het decimale talstelsel dat het telwerk kan bevatten

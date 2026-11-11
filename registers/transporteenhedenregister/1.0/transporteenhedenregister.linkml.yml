@@ -50,8 +50,6 @@ classes:
     broad_mappings:
       - begrip:dwk8c #transportcapaciteit
     description: relatie tussen routedelen waarbij hun transportcapaciteit bij gelijktijdig transport wordt begrensd door gedeelde netelementen
-    annotations:
-      tijdlijn_geldigheid: true
     attributes:
       noodcapaciteit:
         description: transportcapaciteit in alternatieve bedieningssituaties
@@ -72,6 +70,7 @@ classes:
         multivalued: true
         annotations:
           inverse_cardinality: "*"
+          volgt_tijdlijn_geldigheid: true
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -124,8 +123,6 @@ classes:
     class_uri: gelijktijdigheidsbeperking
     broad_mappings:
       - begrip:a4ejc #netfunctie
-    annotations:
-      tijdlijn_geldigheid: true
     description: beperking op het gelijktijdig actief zijn van routedelen
     attributes:
       # relaties:
@@ -135,6 +132,7 @@ classes:
         multivalued: true
         annotations:
           inverse_cardinality: "*"
+          volgt_tijdlijn_geldigheid: true
     unique_keys:
       identificatie:
         unique_key_slots:

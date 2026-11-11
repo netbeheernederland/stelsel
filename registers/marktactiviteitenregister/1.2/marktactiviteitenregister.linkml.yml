@@ -27,9 +27,6 @@ classes:
     source: energiewet:g=2025-07-01
     see_also:
       - iceg:hoofdstuk=2&paragraaf=2.5&artikel=2.5.3&g=2025-01-01
-    annotations:
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     attributes:
       einddatum:
         description: dag waarop de overeenkomst afloopt dan wel automatisch wordt verlengd
@@ -59,8 +56,6 @@ classes:
       - iceg:hoofdstuk=2&paragraaf=2.1&g=2025-01-01
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     attributes:
       dienst:
         description: soort marktactiviteit dat door een marktpartij op een aansluiting of allocatiepunt wordt verricht
@@ -94,9 +89,6 @@ classes:
     description: bericht van een leverancier dat hij een leveringsovereenkomst heeft afgesloten
     see_also:
       - iceg:hoofdstuk=2&paragraaf=2.5&artikel=2.5.5&g=2025-01-01
-    annotations:
-      tijdlijn_registratie: true
-      tijdlijn_effectuering: true
     attributes:
       # relaties:
       van:

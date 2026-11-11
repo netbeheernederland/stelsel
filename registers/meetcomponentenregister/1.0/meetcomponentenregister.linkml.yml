@@ -54,7 +54,6 @@ classes:
       - begrip:9sgi2 #netcomponent
     annotations:
       tijdlijn_geldigheid: true
-      tijdlijn_registratie: true
     attributes:
       afkeurjaar:
         description: kalenderjaar waarin is vastgesteld dat het apparaat ongeschikt is voor verder gebruik
@@ -180,9 +179,9 @@ classes:
         range: Any
         exactly_one_of:
           - range: Allocatiepunt bij aansluiting
-          - range: GCvO-installatie
+          - range: GvO-installatie
         comments:
-          - Alhoewel een GCvO-installatie of allocatiepunt in principe bemeten kan worden door meerdere meters, maakt dit model de aanname dat dat niet het geval kan zijn bij kleinverbruikaansluitingen.
+          - Alhoewel een GvO-installatie of allocatiepunt in principe bemeten kan worden door meerdere meters, maakt dit model de aanname dat dat niet het geval kan zijn bij kleinverbruikaansluitingen.
         required: false
         multivalued: false
         annotations:
@@ -217,6 +216,7 @@ classes:
         multivalued: false
         annotations:
           inverse_cardinality: "*"
+          volgt_tijdlijn_geldigheid: true
       gedefinieerd volgens:
         range: Telwerkdefinitie
         required: true
@@ -239,8 +239,8 @@ classes:
     class_uri: meetcomponentstandaardenregister:Gatewaycodering
     annotations:
       external_registry: Meetcomponentstandaardenregister
-  GCvO-installatie:
-    class_uri: installatieregister:GCvO-installatie
+  GvO-installatie:
+    class_uri: installatieregister:GvO-installatie
     annotations:
       external_registry: Installatieregister
   Marktpartijregistratie:
