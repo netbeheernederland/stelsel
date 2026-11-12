@@ -121,6 +121,14 @@ Gebruik voor:
 - logtijdstippen
 - gebeurtenissen
 
+### Kloktijd
+
+Tijd die de klok volgens de ter plaatse geldende regels aangeeft, zonder kalenderdatum.
+
+Gebruik voor:
+
+- dagelijks terugkerende momenten of tijdsvensters
+
 ### Tijdsduur
 
 Lengte van een tijdsinterval.
