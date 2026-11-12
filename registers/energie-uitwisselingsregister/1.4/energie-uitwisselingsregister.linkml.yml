@@ -190,10 +190,13 @@ classes:
       - begrip:tibcm #energie-uitwisseling
     description: werkelijk gemeten gasafname in m3(n;35,17) in de meest recente 12 volledige gasmaanden voor telemetrieverbruikers
     source: bcg2026:g=2026-02-21
-    annotations:
-      tijdlijn_geldigheid: true
     slots:
+      - beginmoment
+      - eindmoment
       - waarde
+    slot_usage:
+      eindmoment:
+        required: false
     attributes:
       # relaties:
       op:
@@ -201,7 +204,7 @@ classes:
         required: true
         multivalued: false
         annotations:
-          inverse_cardinality: "0..1"
+          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -369,7 +372,7 @@ classes:
     comments:
       - Niet te verwarren met restantvolume.
     see_also:
-      - mcg:hoofdstuk=5&paragraaf=5.2&artikel=5.2.3&g=2025-05-08
+      - mcg:artikel=5.2.3&g=2025-05-08
     slots:
       - beginmoment
       - eindmoment
@@ -432,13 +435,16 @@ classes:
       - Ook wel bekend als standaardjaarafname (SJA) elektriciteit, standaardjaarinvoeding (SJI) elektriciteit, standaardjaarverbruik (SJV) gas of jaarverbruik gas.
       - Niet te verwarren met jaarverbruik telemetrieverbruikers.
     see_also:
-      - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.3&g=2025-01-01
-    annotations:
-      tijdlijn_geldigheid: true
+      - iceg:artikel=2.1.3&g=2025-01-01
     slots:
+      - beginmoment
+      - eindmoment
       - energierichting
       - tariefperiode
       - waarde
+    slot_usage:
+      eindmoment:
+        required: false
     attributes:
       # relaties:
       op:
@@ -450,6 +456,7 @@ classes:
     unique_keys:
       identificatie:
         unique_key_slots:
+          - beginmoment
           - energierichting
           - op
           - tariefperiode
@@ -458,7 +465,7 @@ classes:
     is_a: Profielfractie
     description: quotiënt van uitgewisseld gas in een uur en uitgewisseld gas in het bijbehorende kalenderjaar, gecorrigeerd voor temperatuur
     see_also:
-      - iceg:hoofdstuk=2&paragraaf=2.4&artikel=2.4.2&g=2025-01-01
+      - iceg:artikel=2.4.2&g=2025-01-01
     slots:
       - beginmoment
       - eindmoment

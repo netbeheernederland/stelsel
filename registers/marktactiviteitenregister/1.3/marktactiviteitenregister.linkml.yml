@@ -21,7 +21,7 @@ annotations:
     - `Systeemkoppeling` toegevoegd, omdat marktpartijen daarop actief kunnen zijn.
     - `Melding leveringsovereenkomst` vervallen: komt niet terug in de Regeling gegevensuitwisseling Energiewet.
     - `dynamische of tijdsafhankelijke leveringsprijs` toegevoegd, om te bepalen of een leverancier recht heeft op meetgegevens per kwartier.
-    - Tijdlijnen vervangen door tijdseigenschappen, omdat tijdlijnen alleen kunnen worden toegepast op entiteiten met een niet-herbruikbare identificatie.
+    - `ingangsdatum` toegevoegd en deel gemaakt van de identificatie van `Marktactiviteit` om 'reïncarnaties' op de geldigheidstijdlijn te voorkomen.
 
 classes:
   Leveringsovereenkomst:
@@ -33,11 +33,11 @@ classes:
     see_also:
       - rge:artikel=2.18
     attributes:
-      begindatum:
-        description: dag waarop de overeenkomst van kracht wordt
-        range: Datum
       einddatum:
         description: dag waarop de overeenkomst afloopt dan wel automatisch wordt verlengd
+        range: Datum
+      ingangsdatum:
+        description: dag waarop de overeenkomst van kracht wordt
         range: Datum
       opzegtermijn:
         description: aantal dagen tussen opzegging en beëindiging van de overeenkomst
@@ -58,7 +58,7 @@ classes:
     unique_keys:
       identificatie:
         unique_key_slots:
-          - begindatum
+          - ingangsdatum
           - met
           - op
   Marktactiviteit:
@@ -67,14 +67,9 @@ classes:
       - begrip:ihyma #marktactiviteit
     see_also:
       - iceg:hoofdstuk=2&paragraaf=2.1&g=2025-01-01
+    annotations:
+      tijdlijn_geldigheid: true
     attributes:
-      beginmoment:
-        description: eerste tijdstip waarop iets geldt
-        range: Tijdstip
-        required: true
-      eindmoment:
-        description: eerste tijdstip waarop iets niet meer geldt
-        range: Tijdstip
       dienst:
         description: soort marktactiviteit dat door een marktpartij op een aansluiting of allocatiepunt wordt verricht
         range: Dienst
@@ -84,6 +79,10 @@ classes:
         comments:
           - Alleen van toepassing bij levering en teruglevering.
         range: Waarheidswaarde
+      ingangsdatum:
+        description: dag waarop de marktactiviteit aanvangt
+        range: Datum
+        required: true
       # relaties:
       op:
         range: Any
@@ -104,8 +103,8 @@ classes:
     unique_keys:
       identificatie:
         unique_key_slots:
-          - beginmoment
           - dienst
+          - ingangsdatum
           - op
 
   # externe entiteiten:
