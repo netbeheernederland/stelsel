@@ -70,16 +70,7 @@ Een entiteit die wordt omsloten door een andere entiteit is daarvan een speciali
 
 ## Tijdsaspecten
 
-Sommige gegevens veranderen in de tijd. Denk aan een verzwaring van de aansluiting of adreswijziging. Als het van belang is om het verleden te reconstrueren of op de toekomst te anticiperen, dan zie je annotaties als:
-
-- `⏲ tijdlijn geldigheid`
-- `⏲ tijdlijn registratie`
-- `⏲ tijdlijn effectuering`
-- `⏲ levensduur`
-
-Deze geven aan in welke periode een feit geldig was in de werkelijkheid (`tijdlijn geldigheid`), wanneer deze bekend was in het systeem (`tijdlijn registratie`) en wanneer deze van kracht was voor de energiemarkt (`tijdlijn effectuering`). De `levensduur` geeft het moment van ontstaan en vergaan van een object aan.
-
-Voor meer informatie, zie de pagina over [Tijdlijnen](modelleurs/tijdlijnen).
+Sommige entiteiten veranderen in de tijd. Denk aan een verzwaring van de aansluiting of adreswijziging. Als het van belang is om het verleden te reconstrueren of op de toekomst te anticiperen, dan zie je deze entiteiten geannoteerd met een kloksymbool (⏲). Voor meer informatie, zie de pagina over [Tijdlijnen](modelleurs/tijdlijnen).
 
 ## Kleuren
 

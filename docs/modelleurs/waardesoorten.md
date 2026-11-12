@@ -93,7 +93,7 @@ Dit type wordt gebruikt wanneer afronding of benadering niet is toegestaan.
 
 ### Waarheidswaarde
 
-Anduiding die één van twee elkaar uitsluitende waarden kan aannemen.
+Eén van twee elkaar uitsluitende waarden.
 
 Gebruik voor:
 

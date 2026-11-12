@@ -35,7 +35,7 @@
 {%- macro key_symbol(class, slot) -%}
     {%- for key in class.unique_keys -%}
         {%- if slot.name in class.unique_keys[key].unique_key_slots -%}
-            <span title="Maakt deel uit van de identificatie">🔑</span>
+            <span title="Maakt deel uit van de identificatie">#</span>
         {%- endif -%}
     {%- endfor -%}
 {%- endmacro -%}
@@ -242,7 +242,7 @@ parent: "{{schema.title}}"
 | Eigenschap | Omschrijving |
 | :--- | :--- |
 {% for slot in properties -%}
-| <span class="fw-500">{{slot.name}}</span><br/><span class="fw-300">{{key_symbol(class, slot)}} {{compute_range(slot)}} [{{gen.cardinality(slot)}}]</span> | {{omschrijving(slot)}} |
+| <span class="fw-500">{{slot.name}}</span><br/><span class="fw-300">{{key_symbol(class, slot)}} [{{gen.cardinality(slot)}}] {{compute_range(slot)}}</span> | {{omschrijving(slot)}} |
 {% endfor %}
 {% endif %}
 

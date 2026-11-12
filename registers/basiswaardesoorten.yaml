@@ -23,7 +23,7 @@ types:
     description: tijd die de klok volgens de ter plaatse geldende regels aangeeft, zonder kalenderdatum
 
   Waarheidswaarde:
-    description: aanduiding die één van twee elkaar uitsluitende waarden kan aannemen
+    description: één van twee elkaar uitsluitende waarden
 
   Datum:
     description: kalenderdatum zonder tijdsaanduiding
