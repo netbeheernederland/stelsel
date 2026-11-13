@@ -1,15 +1,10 @@
 id: https://modellen.netbeheernederland.nl/stelsel/registers/tarievenregister
 name: tarievenregister
 title: Tarievenregister
-version: 2.0-draft
+version: "2.0-draft"
 description: Het tarievenregister legt de tarieven vast die als grondslag dienen voor leveranciers om namens systeembeheerders kosten in rekening te brengen bij aangeslotenen.
-comments:
-  - |
-    Vragen aan domeinexperts die tijdens de volgende sessie worden toegelicht:
-    - Zullen we `verbruiksonafhankelijk systeemtarief` veranderen in `verbruiksonafhankelijk periodiek systeemtarief` om de tarieven voor de eenmalige aansluitvergoeding expliciet uit te sluiten?
-    - Bij kleinverbruik lijkt er zowel voor gas als elektriciteit geen sprake te zijn van een `TAVT`. Klopt dat?
 see_also:
-  - er:hoofdstuk=2&afdeling=2.3&artikel=2.35&g=2026-09-02
+  - er:artikel=2.35&g=2026-09-02
   - tce:g=2026-07-09
   - tcg:g=2026-05-28
 prefixes:
@@ -160,33 +155,51 @@ classes:
     class_uri: Transporttariefperiode
     exact_mappings:
       - begrip:t2df3 #transporttariefperiode
+    annotations:
+      tijdlijn_geldigheid: true
     attributes:
       beginmaand:
-        description: eerste kalendermaand waarop iets geldt
+        description: eerste kalendermaand van de periode
         comments:
           - Representatie volgt ISO 8601 met waarden 1 (januari) tot en met 12 (december).
         required: true
         range: Geheel getal
       eindmaand:
-        description: laatste kalendermaand waarop iets geldt
+        description: laatste kalendermaand van de periode (inclusief)
         comments:
           - Representatie volgt ISO 8601 met waarden 1 (januari) tot en met 12 (december).
           - Indien `eindmaand` kleiner is dan `beginmaand` (bijv. 2 en 12), overspant de periode de jaarwisseling.
         required: true
         range: Geheel getal
       begintijd:
-        description: eerste moment van de dag waarop iets geldt
+        description: moment van de dag waarop de periode aanvangt
         required: true
         range: Kloktijd
       eindtijd:
-        description: eerste moment van de dag waarop iets niet meer geldt
+        description: moment van de dag waarop de periode eindigt (exclusief)
+        comments:
+          - De `eindtijd` is exclusief zodat er een halfopen interval `[begintijd, eindtijd)` geldt.
+          - Indien `eindtijd` kleiner is dan `begintijd` (bijv. van 22 tot 6 uur), dan loopt de periode door tot de volgende dag, ook als die dag na de `eindmaand` valt.
         required: true
         range: Kloktijd
-      werkdagen:
-        description: geeft aan of de periode enkel geldt voor dagen, niet zijnde een zaterdag of een zondag en niet zijnde een algemeen erkende feestdag als bedoeld in artikel 3, eerste lid, van de Algemene Termijnenwet, noch een in het tweede of krachtens het derde lid van genoemd artikel met een algemeen erkende feestdag gelijkgestelde dag
+      werkdag:
+        description: geeft aan of de periode enkel geldt voor een dag, niet zijnde een zaterdag of een zondag en niet zijnde een algemeen erkende feestdag als bedoeld in artikel 3, eerste lid, van de Algemene Termijnenwet, noch een in het tweede of krachtens het derde lid van genoemd artikel met een algemeen erkende feestdag gelijkgestelde dag
         see_also: at:artikel=3&g=2010-10-10
         required: true
         range: Waarheidswaarde
+      # relaties:
+      geldigheid van:
+        range: Wegingsfactor
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
+      voor:
+        range: Tariefcategorie
+        required: true
+        multivalued: false
+        annotations:
+          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
@@ -194,7 +207,8 @@ classes:
           - begintijd
           - eindmaand
           - eindtijd
-          - werkdagen
+          - voor
+          - werkdag
   Wegingsfactor:
     class_uri: Wegingsfactor
     broad_mappings:
@@ -218,17 +232,10 @@ classes:
         multivalued: true
         annotations:
           inverse_cardinality: "1..*"
-      voor:
-        range: Tariefcategorie
-        required: true
-        multivalued: false
-        annotations:
-          inverse_cardinality: "*"
     unique_keys:
       identificatie:
         unique_key_slots:
           - categorie
-          - voor
 
   # verwijzingen naar externe entiteiten:
   Marktparijregistratie:
@@ -240,7 +247,9 @@ enums:
   Eenheid:
     permissible_values:
       EUR/dag:
+        description: euro per dag
       EUR/kWh:
+        description: euro per kilowattuur
   Energiedrager:
     permissible_values:
       elektriciteit:
@@ -250,6 +259,10 @@ enums:
     permissible_values:
       PAV:
         meaning: begrip:z37a3 #periodieke aansluitvergoeding
+      TAVT:
+        meaning: begrip:jraj2 #transportafhankelijk transporttarief
+        comments:
+          - Niet van toepassing bij elektriciteit
       TOVT:
         meaning: begrip:jm8kj #transportonafhankelijk transporttarief
       MT:
@@ -257,7 +270,7 @@ enums:
   Systeemtariefsoort:
     permissible_values:
       VO:
-        meaning: begrip:jn6a3 #verbruiksonafhankelijk periodiek systeemtarief
+        meaning: begrip:jn6a3 #verbruiksonafhankelijk systeemtarief
       VA-TA:
         meaning: begrip:7jthh #verbruiksafhankelijk tijdsafhankelijk transporttarief
       VA-NTA:

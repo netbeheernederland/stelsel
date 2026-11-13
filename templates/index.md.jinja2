@@ -1,4 +1,4 @@
-{%- set newline = '{::nomarkdown}<hr style="visibility:hidden;height:0;margin:1em 0 0 0"/>{:/}' -%}
+{%- set in_table_separator = '{::nomarkdown}<hr style="visibility:hidden;height:0;margin:1em 0 0 0"/>{:/}' -%}
 
 {%- macro link(name, local=false) -%}
     {%- if local -%}
@@ -100,7 +100,7 @@
     {%- endif -%}
 {%- endmacro -%}
 
-{% macro omschrijving(element) -%}
+{% macro omschrijving(element, separator = '\n\n') -%}
     {%- set parts = namespace(items=[]) -%}
 
     {# tijdlijn geldigheid #}
@@ -160,7 +160,7 @@
 
     {# comments #}
     {%- if element.comments -%}
-        {%- set _ = parts.items.append(element.comments | join(newline)) -%}
+        {%- set _ = parts.items.append(element.comments | join(separator)) -%}
     {%- endif -%}
 
     {# deprecated #}
@@ -183,7 +183,7 @@
         {%- set _ = parts.items.append('{::nomarkdown}<details><summary class="text-delta">Wijzigingen</summary><ol>{:/}\n' ~ element.annotations.changes.value ~ '\n{::nomarkdown}</ol></details>{:/}') -%}
     {%- endif -%}
 
-    {{parts.items | join(newline)}}
+    {{parts.items | join(separator)}}
 {%- endmacro -%}
 
 ---
@@ -247,7 +247,7 @@ parent: "{{schema.title}}"
 | Eigenschap | Omschrijving |
 | :--- | :--- |
 {% for slot in properties -%}
-| <span class="fw-500">{{slot.name}}</span><br/><span class="fw-300">{{key_symbol(class, slot)}} [{{gen.cardinality(slot)}}] {{compute_range(slot)}}</span> | {{omschrijving(slot)}} |
+| <span class="fw-500">{{slot.name}}</span><br/><span class="fw-300">{{key_symbol(class, slot)}} [{{gen.cardinality(slot)}}] {{compute_range(slot)}}</span> | {{omschrijving(slot, in_table_separator)}} |
 {% endfor %}
 {% endif %}
 
@@ -258,7 +258,7 @@ parent: "{{schema.title}}"
 | {{class.name}} is ... | Omschrijving |
 | :---  | :--- |
 {% for slot in relationships -%}
-| {{key_symbol(class, slot)}}{{clock_symbol(slot)}} {{slot.name}} {{compute_range(slot)}} [{% if slot.annotations.inverse_cardinality %}{{slot.annotations.inverse_cardinality.value}}{% endif %} → {{gen.cardinality(slot)}}] | {{omschrijving(slot)}} |
+| {{key_symbol(class, slot)}}{{clock_symbol(slot)}} {{slot.name}} {{compute_range(slot)}} [{% if slot.annotations.inverse_cardinality %}{{slot.annotations.inverse_cardinality.value}}{% endif %} → {{gen.cardinality(slot)}}] | {{omschrijving(slot, in_table_separator)}} |
 {% endfor %}
 {% endif %}
 
@@ -281,7 +281,7 @@ parent: "{{schema.title}}"
 | :--- | :--- |
 {% if e.permissible_values -%}
 {% for pv in e.permissible_values.values() | sort(attribute=text) -%}
-| {{pv.text}} | {{omschrijving(pv)}} |
+| {{pv.text}} | {{omschrijving(pv, in_table_separator)}} |
 {% endfor -%}
 {% else -%}
 | {{e.name}} | _dynamisch_ |
@@ -297,7 +297,7 @@ parent: "{{schema.title}}"
 | Waardesoort | Omschrijving | Gebaseerd op | Patroon |
 | :--- | :--- | :--- | :--- |
 {% endif -%}
-| {{anchor(t)}}{{t.name}} | {{omschrijving(t)}} | {% if t.typeof %}{{link(t.typeof, true)}}{% endif %} | {% if t.pattern %}`{{t.pattern}}`{% endif %} |
+| {{anchor(t)}}{{t.name}} | {{omschrijving(t, in_table_separator)}} | {% if t.typeof %}{{link(t.typeof, true)}}{% endif %} | {% if t.pattern %}`{{t.pattern}}`{% endif %} |
 {%- endfor %}
 
 {% if schema.annotations.approvals %}
