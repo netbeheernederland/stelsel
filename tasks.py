@@ -134,6 +134,8 @@ def generate_linkml_docs(c, only_model=None, only_version=None):
             shutil.copy(svg_file, out_dir)
 
             print(f"{model_name}/{version_id}:")
+            cmd = f"gen-linkml -f yaml -o {os.path.join(out_dir, f"{model_name}.linkml.yml")} {yaml_file}"
+            c.run(cmd)
             cmd = f"gen-doc --template-directory templates -d {out_dir} {yaml_file}"
             c.run(cmd)
 

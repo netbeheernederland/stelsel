@@ -103,6 +103,11 @@
 {% macro omschrijving(element) -%}
     {%- set parts = namespace(items=[]) -%}
 
+    {# tijdlijn geldigheid #}
+    {%- if element.annotations.tijdlijn_geldigheid -%}
+        {%- set _ = parts.items.append('⏲ geldigheidstijdlijn') -%}
+    {%- endif -%}
+
     {# description #}
     {%- if element.description -%}
         {# source #}
@@ -163,11 +168,6 @@
         {%- set _ = parts.items.append('Gaat vervallen: ' ~ element.deprecated) -%}
     {%- endif -%}
 
-    {# tijdlijn geldigheid#}
-    {%- if element.annotations.tijdlijn_geldigheid -%}
-        {%- set _ = parts.items.append('Met geldigheidstijdlijn') -%}
-    {%- endif -%}
-
     {# see_also #}
     {%- if element.see_also -%}
         {%- set list_items = [] -%}
@@ -196,6 +196,9 @@ parent: "{{schema.title}}"
 
 {{omschrijving(schema)}}
 
+[LinkML-schema]({{schema.name}}.linkml.yml)
+{{ '{: .fs-3 }' }}
+
 ---
 
 ## Entiteiten
@@ -206,6 +209,8 @@ parent: "{{schema.title}}"
 ---
 
 ![Diagram]({{schema.name}}.drawio.svg)
+
+<script>document.write('<p><a class="fs-3" href="https://app.diagrams.net/#U' + encodeURIComponent(window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + '{{schema.name}}.drawio.svg') + '"><em>&#9998; Bewerken in draw.io</em></a></p>');</script>
 
 ---
 
