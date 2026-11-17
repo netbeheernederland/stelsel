@@ -179,7 +179,7 @@ classes:
         description: moment van de dag waarop de periode eindigt (exclusief)
         comments:
           - De `eindtijd` is exclusief zodat er een halfopen interval `[begintijd, eindtijd)` geldt.
-          - Indien `eindtijd` kleiner is dan `begintijd` (bijv. van 22 tot 6 uur), dan loopt de periode door tot de volgende dag, ook als die dag na de `eindmaand` valt.
+          - Indien `eindtijd` kleiner is dan `begintijd` (bijv. van 22 tot 6 uur), dan loopt de periode door tot de volgende dag, tenzij die dag na de `eindmaand` valt.
         required: true
         range: Kloktijd
       werkdag:

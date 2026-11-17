@@ -309,7 +309,7 @@ classes:
       eindtijd:
         description: eerste tijd waarop het venster niet meer van toepassing is
         comments:
-          - Indien `eindtijd` kleiner is dan `begintijd` (bijv. van 22 tot 6 uur), dan loopt het venster door tot de volgende kalenderdag.
+          - Indien `eindtijd` kleiner is dan `begintijd` (bijv. van 22 tot 6 uur), dan loopt het venster door tot de volgende kalenderdag, tenzij die dag na de `eindmaand` valt..
         required: true
         range: Kloktijd
       tijdens feestdagen:
