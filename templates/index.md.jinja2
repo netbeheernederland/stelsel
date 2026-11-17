@@ -14,7 +14,7 @@
         {%- endif -%}
     {%- else -%}
         {%- if name.startswith('begrip:') -%}
-            {{ '{% include begrip.html id="' ~ name.replace('begrip:', '') ~ '" %}' }}
+            {{ '{% include begrip.html prefix="begrip" id="' ~ name.replace('begrip:', '') ~ '" %}' }}
         {%- else -%}
             [{{name}}]({{schemaview.expand_curie(name)}})
         {%- endif -%}
@@ -192,25 +192,39 @@ parent: "{{schema.title}}"
 ---
 
 # {{schema.title}}
-{{ '{: .no_toc }' }}
+{: .no_toc }
 
 {{omschrijving(schema)}}
 
 [LinkML-schema]({{schema.name}}.linkml.yml)
-{{ '{: .fs-3 }' }}
+{: .fs-3 }
 
 ---
 
-## Entiteiten
-{{ '{: .no_toc .text-delta }' }}
+## Entiteitend
+{: .no_toc .text-delta }
 1. TOC
-{{ '{:toc}' }}
+{:toc}
 
 ---
 
 ![Diagram]({{schema.name}}.drawio.svg)
 
-<script>document.write('<p><a class="fs-3" href="https://app.diagrams.net/#U' + encodeURIComponent(window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1) + '{{schema.name}}.drawio.svg') + '"><em>&#9998; Kopie bewerken</em></a></p>');</script>
+<script>
+    (function() {
+        const svgUrl =
+            window.location.origin
+            + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1)
+            + '{{schema.name}}.drawio.svg';
+        document.write(
+            `<p>
+                <a class="fs-3" href="https://app.diagrams.net/#U${encodeURIComponent(svgUrl)}">
+                    <em>&#9998; Kopie bewerken</em>
+                </a>
+            </p>`
+        );
+   })();
+</script>
 
 ---
 
@@ -242,7 +256,7 @@ parent: "{{schema.title}}"
 
 {% if properties %}
 ### Eigenschappen
-{{ '{: .no_toc .text-delta }' }}
+{: .no_toc .text-delta }
 
 | Eigenschap | Omschrijving |
 | :--- | :--- |
@@ -253,7 +267,7 @@ parent: "{{schema.title}}"
 
 {% if relationships %}
 ### Relaties
-{{ '{: .no_toc .text-delta }' }}
+{: .no_toc .text-delta }
 
 | {{class.name}} is ... | Omschrijving |
 | :---  | :--- |
@@ -268,12 +282,12 @@ parent: "{{schema.title}}"
 {% for e in gen.all_enum_objects() | sort(attribute=sort_by) %}
 {% if loop.first %}
 ## Waardelijsten
-{{ '{: .no_toc }' }}
+{: .no_toc }
 {% endif %}
 
 {{anchor(e)}}
 ### {{e.name}}
-{{ '{: .no_toc }' }}
+{: .no_toc }
 
 {{omschrijving(e)}}
 
@@ -292,7 +306,7 @@ parent: "{{schema.title}}"
 {% for t in schemaview.schema.types.values() | sort(attribute=sort_by) %}
 {% if loop.first %}
 ## Waardesoorten
-{{ '{: .no_toc }' }}
+{: .no_toc }
 
 | Waardesoort | Omschrijving | Gebaseerd op | Patroon |
 | :--- | :--- | :--- | :--- |
@@ -304,7 +318,7 @@ parent: "{{schema.title}}"
 {% for a in schema.annotations.approvals.value | sort(attribute=source_authority) %}
 {% if loop.first %}
 ## Goedkeuring
-{{ '{: .no_toc }' }}
+{: .no_toc }
 
 | Bronhouder | Vertegenwoordigd door | Datum |
 | :--- | :--- | :--- |

@@ -32,7 +32,7 @@ classes:
     description: met een wegingsfactor vermenigvuldigde tariefhoogte
     attributes:
       waarde:
-        description: hoeveelheid eenheden
+        description: numerieke monetaire omvang per rekeneenheid
         required: true
         range: Decimaal getal
       # relaties:
@@ -80,7 +80,7 @@ classes:
         annotations:
           inverse_cardinality: "*"
       vastgesteld door:
-        range: Marktparijregistratie
+        range: Marktpartijregistratie
         required: true
         multivalued: false
         annotations:
@@ -238,8 +238,8 @@ classes:
           - categorie
 
   # verwijzingen naar externe entiteiten:
-  Marktparijregistratie:
-    class_uri: marktpartijenregister:Marktparijregistratie
+  Marktpartijregistratie:
+    class_uri: marktpartijenregister:Marktpartijregistratie
     annotations:
       external_registry: Marktpartijenregister
 

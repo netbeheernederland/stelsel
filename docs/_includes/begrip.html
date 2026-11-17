@@ -2,5 +2,5 @@
 {%- if b -%}
 <a href="{{ b.uri }}">{{ b.label }}</a>
 {%- else -%}
-<code>begrip:{{ include.id }}</code>
+<code>{{include.prefix}}:{{ include.id }}</code>
 {%- endif -%}
