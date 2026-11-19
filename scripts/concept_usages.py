@@ -7,6 +7,53 @@ OUTPUT_FILE = os.path.join(BUILD_DIR, "_registers", "concept_usages.json")
 
 # --- Helper functies ---
 
+def parse_version(version_dir):
+    try:
+        return tuple(int(part) for part in version_dir.split("."))
+    except ValueError:
+        return None
+
+# Selects latest (stable) version
+# Matches redirect logic to latest (stable) version
+def select_model_files(models_dir):
+    selected_files = []
+
+    for model_dir in os.listdir(models_dir):
+        model_path = os.path.join(models_dir, model_dir)
+        if not os.path.isdir(model_path):
+            continue
+
+        version_dirs = [
+            d for d in os.listdir(model_path)
+            if os.path.isdir(os.path.join(model_path, d)) and parse_version(d) is not None
+        ]
+        version_dirs.sort(key=parse_version, reverse=True)
+
+        latest_file = None
+        latest_stable_file = None
+
+        for version_dir in version_dirs:
+            yaml_path = os.path.join(model_path, version_dir, f"{model_dir}.linkml.yml")
+            if not os.path.isfile(yaml_path):
+                continue
+
+            if latest_file is None:
+                latest_file = yaml_path
+
+            with open(yaml_path, "r", encoding="utf-8") as f:
+                data = yaml.safe_load(f) or {}
+
+            version_number = str(data.get("version", ""))
+            if "-draft" not in version_number:
+                latest_stable_file = yaml_path
+                break
+
+        chosen = latest_stable_file or latest_file
+        if chosen:
+            selected_files.append(chosen)
+
+    return selected_files
+
 def add_usage(usages_dict, target_concept_uri, model_name, model_url, el_name, el_type, el_url):
     """Voegt een verwijzing toe aan de usages dictionary."""
     if not target_concept_uri: return
@@ -52,13 +99,13 @@ def expand_curie(curie, prefixes):
         return prefixes[prefix] + local_id
     return curie
 
-files = glob.glob(os.path.join(MODELS_DIR, "**/*.linkml.yml"), recursive=True)
+files = select_model_files(MODELS_DIR)
 
 for file_path in files:
     with open(file_path, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f)
     
-    if not data or 'classes' not in data: continue
+    if not data: continue
 
     model_id = data.get('id')
     model_name = data.get('name', model_id)

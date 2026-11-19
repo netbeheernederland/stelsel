@@ -14,6 +14,12 @@ def get_model_metadata(yaml_path):
     version = str(data.get("version", os.path.basename(os.path.dirname(yaml_path))))
     return name, version
 
+def parse_version(version_dir):
+    try:
+        return tuple(int(part) for part in version_dir.split("."))
+    except ValueError:
+        return None
+
 # Itereer over modellen
 for model_dir in sorted(os.listdir(BASE_INPUT_MODELS)):
     model_path = os.path.join(BASE_INPUT_MODELS, model_dir)
@@ -22,7 +28,14 @@ for model_dir in sorted(os.listdir(BASE_INPUT_MODELS)):
     model_name = None
     latest_version = None
     latest_stable_version = None
-    for version_dir in sorted(os.listdir(model_path), reverse=True):
+
+    version_dirs = [
+        d for d in os.listdir(model_path)
+        if os.path.isdir(os.path.join(model_path, d)) and parse_version(d) is not None
+    ]
+    version_dirs.sort(key=parse_version, reverse=True)
+
+    for version_dir in version_dirs:
         yaml_path = os.path.join(model_path, version_dir, f"{model_dir}.linkml.yml")
         if not os.path.exists(yaml_path):
             continue
@@ -32,7 +45,9 @@ for model_dir in sorted(os.listdir(BASE_INPUT_MODELS)):
         if "-draft" not in version_number:
             latest_stable_version = version_dir
             break
+
     redirect_target = latest_stable_version or latest_version
+
     if redirect_target is not None:
         yaml_path = os.path.join(model_path, redirect_target, f"{model_dir}.linkml.yml")
         model_name, _ = get_model_metadata(yaml_path)
