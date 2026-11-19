@@ -37,6 +37,8 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:gnhiy #aansluiting
 
 classes:
   Aansluiting:
@@ -204,8 +206,6 @@ classes:
           - locatienummer
   Aftakking:
     class_uri: Aftakking
-    broad_mappings:
-      - begrip:9sgi2 #netcomponent
     description: splitsing van de wikkeling van een transformator
     source: mce:bijlage=3&g=2023-04-01
     see_also:
@@ -344,8 +344,6 @@ classes:
           inverse_cardinality: "1..*"
   Groep van strengen van lichtmasten:
     class_uri: Groep-van-strengen-van-lichtmasten
-    broad_mappings:
-      - begrip:3jypg #aansluitlocatie
     description: verzameling van strengen van lichtmasten waarvan de aansluitingen eventueel ongeïdentificeerde overdrachtspunten bevatten
     comments:
       - Voorheen werden zogenaame 'virtuele aansluitingen' geregistreerd (DIM). Dit register staat alleen de registratie van echte aansluitingen toe. De mooiste manier om een streng van lichtmasten te registreren, is als één aansluiting met één primair allocatiepunt en een overdrachtspunt per lichtmast. Is het aantal strengen bekend maar niet de verdeling van lichtmasten over die strengen, dan als één aansluiting/allocatiepunt/overdrachtspunt per streng, met al deze aansluitingen gegroepeerd in een groep van strengen van lichtmasten. Is het ook het aantal strengen niet bekend, dan als één aansluiting/allocatiepunt/overdrachtspunt. Al deze varianten leiden tot eenzelfde nettarief, volgens de afleidingsregels in het tarievenregister.
@@ -371,8 +369,6 @@ classes:
           - in rekening te brengen bij
   Meettransformator:
     class_uri: Meettransformator
-    broad_mappings:
-      - begrip:9sgi2 #netcomponent
     annotations:
       tijdlijn_geldigheid: true
     description: elektrisch apparaat dat wordt toegepast voor het verlagen van spanning of stroom zodat deze gemeten kan worden
@@ -447,8 +443,6 @@ classes:
           - EAN-code
   Netkoppeling:
     class_uri: Netkoppeling
-    broad_mappings:
-      - begrip:gnhiy #aansluiting
     annotations:
       tijdlijn_geldigheid: true
     description: recht op het gebruik van één of meer verbindingen tussen twee energienetten of tussen een energienet en een interconnector
@@ -665,8 +659,6 @@ classes:
           - identificatie
   Primaire meetkabel:
     class_uri: Primaire-meetkabel
-    broad_mappings:
-      - begrip:9sgi2 #netcomponent
     description: kabel tussen meettransformator en aansluitklemmen
     source: iceg:hoofdstuk=2&paragraaf=2.11&artikel=2.11.4&g=2023-06-28
     attributes:
@@ -726,8 +718,6 @@ classes:
         range: Reëel getal
   Tarieftoepassing:
     class_uri: Tarieftoepassing
-    broad_mappings:
-      - begrip:gnhiy #aansluiting
     description: tariefregel die voor een aansluiting vastlegt welke tariefcomponent geldt en hoe vaak deze in rekening wordt gebracht
     comments:
       - De afleidingsregels staan in het tarievenregister.

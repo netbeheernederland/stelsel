@@ -22,12 +22,12 @@ annotations:
     - `Melding leveringsovereenkomst` vervallen: komt niet terug in de Regeling gegevensuitwisseling Energiewet.
     - `dynamische of tijdsafhankelijke leveringsprijs` toegevoegd, om te bepalen of een leverancier recht heeft op meetgegevens per kwartier.
     - `ingangsdatum` toegevoegd en deel gemaakt van de identificatie van `Marktactiviteit` om 'reïncarnaties' op de geldigheidstijdlijn te voorkomen.
+related_mappings:
+  - begrip:ihyma #marktactiviteit
 
 classes:
   Leveringsovereenkomst:
     class_uri: Leveringsovereenkomst
-    related_mappings:
-      - begrip:ihyma #marktactiviteit
     description: overeenkomst voor de levering van elektriciteit of gas aan een eindafnemer
     source: energiewet:g=2025-07-01
     see_also:

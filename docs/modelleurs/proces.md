@@ -57,19 +57,19 @@ De `patch` kennen wij dus niet: wijzigingen zonder impact op data leiden niet to
 > Met vriendelijke groet,  
 > Namens Team Semantiek,  
 > `[Naam afzender]`  
-> `[Functietitel en organisatie]`
+> `[Functie en organisatie]`
 
 ## E-mail voor formele goedkeuring
 
-> _Onderwerp: Verzoek om goedkeuring: model van `[naam register]` (v`[X.Y]`)_
+> _Onderwerp: Verzoek om goedkeuring: model van `[naam register]` (versie `[X.Y]`)_
 >
 > Beste `[naam]`,
 >
-> Het gezamenlijke registermodel voor het `[naam register]` (v`[X.Y]`) is gereed voor goedkeuring door de data-eigenaren. Graag vragen wij jouw akkoord namens `[naam netbeheerder]`.
+> Het gezamenlijke model voor het `[naam register]` (versie `[X.Y]`) is gereed voor goedkeuring door de data-eigenaren. Graag vragen wij jouw akkoord namens `[naam netbeheerder]`.
 >
 > **Totstandkoming**
 >
-> * **Link naar het model**: `[URL naar specifieke versie]`
+> * **Link naar het model**: `[URL naar specifieke versie]` _(Geen ervaring met het lezen van informatiemodellen? Onder het diagram staan alle begrippen en eigenschappen in gewoon Nederlands uitgelegd. Voor de symbolen in het diagram kun je de [Legenda](https://modellen.netbeheernederland.nl/stelsel/legenda) raadplegen.)_
 > * **Inhoudelijke input**: Dit model is opgesteld op basis van `[relevante wetgeving / marktcodes / standaarden]` en tot stand gekomen met inbreng van domeinexperts uit de sector (namens `[naam netbeheerder]` waren `[namen experts]` betrokken) en een peerreview binnen Team Semantiek.
 > * **Aandachtspunten**:
 >   * `[een paar korte bullets over gemaakte keuzes]`
@@ -86,12 +86,15 @@ De `patch` kennen wij dus niet: wijzigingen zonder impact op data leiden niet to
 >
 > **Wat we van je vragen (graag uiterlijk `[datum]`)**:
 >
-> 1. Kun je per reply op deze e-mail bevestigen dat je akkoord bent met v`[X.Y]` van het `[naam register]`? (Eventuele opmerkingen of wijzigingsverzoeken kun je daarbij uiteraard ook doorgeven. Kleine opmerkingen nemen we mee in een volgende versie. Bij eventuele blokkerende bezwaren stemmen we die eerst met je af.)
+> 1. Kun je per reply op deze e-mail met CC naar teamsemantiek@netbeheernederland.nl bevestigen dat je akkoord bent met versie `[X.Y]` van het `[naam register]`? (Eventuele opmerkingen of wijzigingsverzoeken kun je daarbij uiteraard ook doorgeven. Kleine opmerkingen nemen we mee in een volgende versie. Bij eventuele blokkerende bezwaren stemmen we die eerst met je af.)
 > 2. Wil je bij je akkoord aangeven welke exacte functie en afdeling we namens `[naam netbeheerder]` bij de goedkeuring mogen vermelden?
+>
+> **Vragen of behoefte aan een korte toelichting?**  
+> We lopen het model graag samen met je door. Laat het gerust weten als je daar behoefte aan hebt, dan plannen we iets in.
 >
 > Alvast hartelijk dank voor de samenwerking!
 >
 > Met vriendelijke groet,  
 > Namens Team Semantiek,  
 > `[Naam afzender]`  
-> `[Functietitel en organisatie]`
+> `[Functie en organisatie]`

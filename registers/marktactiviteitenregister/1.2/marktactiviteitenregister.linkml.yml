@@ -17,12 +17,12 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:ihyma #marktactiviteit
 
 classes:
   Leveringsovereenkomst:
     class_uri: Leveringsovereenkomst
-    related_mappings:
-      - begrip:ihyma #marktactiviteit
     description: overeenkomst voor de levering van elektriciteit of gas aan een eindafnemer
     source: energiewet:g=2025-07-01
     see_also:
@@ -84,8 +84,6 @@ classes:
           - op
   Melding leveringsovereenkomst:
     class_uri: Melding-leveringsovereenkomst
-    related_mappings:
-      - begrip:ihyma #marktactiviteit
     description: bericht van een leverancier dat hij een leveringsovereenkomst heeft afgesloten
     see_also:
       - iceg:hoofdstuk=2&paragraaf=2.5&artikel=2.5.5&g=2025-01-01

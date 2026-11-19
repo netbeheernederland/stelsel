@@ -20,12 +20,12 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:xbzft #energietoerekening
 
 classes:
   Aggregatiesoort:
     class_uri: Aggregatiesoort
-    broad_mappings:
-      - begrip:xbzft #energietoerekening
     comments:
       - De lijst van eigenschappen is nog niet volledig.
     attributes:
@@ -39,8 +39,6 @@ classes:
           - identificatie
   Afzonderlijk toegerekend volume:
     class_uri: Afzonderlijk_toegerekend_volume
-    broad_mappings:
-      - begrip:xbzft #energietoerekening
     description: uitgewisselde energie op een aansluiting, waarvan is verklaard dat zij een marktpartij toekomt
     comments:
       - Ook wel bekend als individueel allocatievolume.
@@ -104,8 +102,6 @@ classes:
           - op
   Geaggregeerd toegerekend volume:
     class_uri: Geaggregeerd_toegerekend_volume
-    broad_mappings:
-      - begrip:xbzft #energietoerekening
     description: uitgewisselde energie met een netgebied, waarvan is verklaard dat zij een marktpartij toekomt
     comments:
       - Ook wel bekend als geaggregeerd allocatievolume dan wel reconciliatievolume.
@@ -166,8 +162,6 @@ classes:
           - per
   Maxverbruik:
     class_uri: Maxverbruik
-    broad_mappings:
-      - begrip:xbzft #energietoerekening
     description: bij een telemetriegrootverbruiker of ten behoeve van netverlies RNB in een uur gedurende de drie recentste volledig verstreken wintermaanden gemeten hoogste gasafname
     source: bcg:g=2021-06-01
     see_also:
@@ -190,8 +184,6 @@ classes:
           - op
   Restantvolumecorrectiefactor:
     class_uri: Restantvolumecorrectiefactor
-    broad_mappings:
-      - begrip:xbzft #energietoerekening
     description: getal waarmee de veronderstelde geprofileerde afname vermenigvuldigd moet worden om het restantvolume toe te wijzen
     comments:
       - Ook wel bekend als meetcorrectiefactor (MCF).
@@ -216,8 +208,6 @@ classes:
           - in
   Run:
     class_uri: Run
-    broad_mappings:
-      - begrip:xbzft #energietoerekening
     description: reeks opeenvolgende berekeningen
     slots:
       - proces
@@ -240,8 +230,6 @@ classes:
           - versie
   Transportverbruiksfactor:
     class_uri: Transportverbruiksfactor
-    broad_mappings:
-      - begrip:xbzft #energietoerekening
     description: getal waarmee het via een netgebied getransporteerde volume vermenigvuldigd moet worden om het transportafhankelijk netverlies (transportverbruik, TVB) te bepalen
     attributes:
       waarde:

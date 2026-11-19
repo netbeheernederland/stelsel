@@ -31,6 +31,8 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:a4ejc #netfunctie
 
 # Phase2Phase-software:
 
@@ -77,8 +79,6 @@ classes:
           - tussen
   Geleidend netelement:
     class_uri: Geleidend-netelement
-    broad_mappings:
-      - begrip:a4ejc #netfunctie
     description: elementaire functionaliteit op een bepaalde plek in het energienet dat tenminste de (potentiële) geleiding van een energiedrager omvat
     annotations:
       tijdlijn_geldigheid: true
@@ -121,8 +121,6 @@ classes:
           - identificatie
   Gelijktijdigheidsbeperking:
     class_uri: gelijktijdigheidsbeperking
-    broad_mappings:
-      - begrip:a4ejc #netfunctie
     description: beperking op het gelijktijdig actief zijn van routedelen
     attributes:
       # relaties:
@@ -171,8 +169,6 @@ classes:
           inverse_cardinality: "*"
   Knooppunt:
     class_uri: Knooppunt
-    broad_mappings:
-      - begrip:a4ejc #netfunctie
     description: begin- of eindpunt van één of meer routedelen
     annotations:
       tijdlijn_geldigheid: true
@@ -219,8 +215,6 @@ classes:
           - identificatie
   Routedeel:
     class_uri: Routedeel
-    broad_mappings:
-      - begrip:a4ejc #netfunctie
     description: afzonderlijk relevante transportroute voor capaciteits- en faalscenario-analyse
     comments:
       - Een routedeel is een afgebakende mogelijkheid voor het verplaatsen van energie. Deze afbakening is zodanig dat zij alle relevante capaciteits- en faalscenario's eenduidig representeert. Bij elektriciteit vormen de railsystemen typisch deze afbakening. Het railsysteem wordt functioneel toegerekend aan alle inkomende en uitgaande routedelen die er gebruik van maken, omdat dit voor capaciteitsdeling relevant is. Railkoppelingen hoeven niet als routedelen te worden gezien, tenzij zij, in uitzonderlijke gevallen, afzonderlijk relevante faalscenario's of capaciteitsbeperkingen introduceren.
@@ -265,8 +259,6 @@ classes:
           - identificatie
   Transporteenheid:
     class_uri: Transporteenheid
-    broad_mappings:
-      - begrip:a4ejc #netfunctie
     description: samenhangende transportmogelijkheid op een verzameling knooppunten, waarvan de benutting niet onafhankelijk kan worden opgesplitst
     annotations:
       tijdlijn_geldigheid: true

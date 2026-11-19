@@ -23,12 +23,12 @@ default_range: Tekst
 annotations:
   changes: |
     - Volledige herziening naar aanleiding van tijdsafhankelijke transporttarieven.
+related_mappings:
+  - begrip:cyq9r #systeemtarief
 
 classes:
   Gewogen tariefhoogte:
     class_uri: Gewogen-tariefhoogte
-    broad_mappings:
-      - begrip:cyq9r #systeemtarief
     description: met een wegingsfactor vermenigvuldigde tariefhoogte
     attributes:
       waarde:
@@ -91,8 +91,6 @@ classes:
           - EAN-code
   Tariefcategorie:
     class_uri: Tariefcategorie
-    related_mappings:
-      - begrip:cyq9r #systeemtarief
     description: verzameling tarieven met dezelfde eigenschappen
     annotations:
       tijdlijn_geldigheid: true
@@ -122,8 +120,6 @@ classes:
           - identificatie
   Tariefcomponent:
     class_uri: Tariefcomponent
-    broad_mappings:
-      - begrip:cyq9r #systeemtarief
     description: deeltarief binnen een samengesteld systeemtarief dat is gebaseerd op één elementair tarief
     comments:
       - Een tariefcomponent deelt dezelfde tariefsoort (zoals `PAV` of `MT`) met het onderliggende elementaire tarief (het interne basistarief van de netbeheerder).

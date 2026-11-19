@@ -28,12 +28,12 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:cyq9r #systeemtarief
 
 classes:
   Tariefcomponent:
     class_uri: Tariefcomponent
-    related_mappings:
-      - begrip:gnhiy #aansluiting
     description: deel van een periodieke vergoeding voor een aansluiting
     comments:
       - De combinatie van netbeheerder, afnemerscategorie en soort is uniek.
@@ -63,8 +63,6 @@ classes:
           - EAN-code
   Totaaltarief:
     class_uri: Totaaltarief
-    related_mappings:
-      - begrip:gnhiy #aansluiting
     description: totale periodieke verdoeding voor een aansluiting
     comments:
       - Het totaaltarief wordt aangemaakt bij de eerste uitvraag van unieke combinatie van netbeheerder, afnemerscategorie en aantallen.

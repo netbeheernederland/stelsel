@@ -24,3 +24,5 @@ default_prefix: this
 # imports:
 #   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:xbzft #energietoerekening

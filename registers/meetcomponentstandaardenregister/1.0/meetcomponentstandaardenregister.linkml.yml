@@ -17,12 +17,12 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:6jeh8 #technische bedrijfsstandaard
 
 classes:
   Gatewaycodering:
     class_uri: Gatewaycodering
-    broad_mappings:
-      - begrip:6jeh8 #technische bedrijfsstandaard
     description: categorisering van meetgateways met gelijke functionele en technische kenmerken, afkomstig van dezelfde fabrikant
     slots:
       - fabrikant
@@ -41,8 +41,6 @@ classes:
           - gatewaycode
   Metercodering:
     class_uri: Metercodering
-    broad_mappings:
-      - begrip:6jeh8 #technische bedrijfsstandaard
     description: categorisering van energiehoeveelheidsmeters met dezelfde (metrologische) kenmerken en van dezelfde fabrikant
     source: nbnlpub:reglement-meterparkbeheer-v62
     see_also:
@@ -85,8 +83,6 @@ classes:
           - metercode
   Telwerkdefinitie:
     class_uri: Telwerkdefinitie
-    broad_mappings:
-      - begrip:6jeh8 #technische bedrijfsstandaard
     description: beschrijving van een cumulatieve energiehoeveelheidsmeting ten behoeve van verrekening
     see_also:
       - iceg:hoofdstuk=2&paragraaf=2.1&artikel=2.1.4&g=2025-01-01

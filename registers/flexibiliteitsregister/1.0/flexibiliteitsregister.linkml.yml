@@ -32,12 +32,13 @@ imports:
   - ../../basiswaardesoorten
 default_prefix: this
 default_range: Tekst
+related_mappings:
+  - begrip:39t96 #capaciteitsdienst
+  - begrip:e8frg #transportvrijgave
 
 classes:
   Redispatchbehoefte:
     class_uri: Redispatchbehoefte
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     description: wat de systeembeheerder nodig heeft aan biedingen redispatch om een transportprobleem op te lossen
     slots:
       - begin levering
@@ -57,8 +58,6 @@ classes:
           - op
   Biedverzoek:
     class_uri: Biedverzoek
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     description: uitnodiging aan marktpartijen om biedingen redispatch te doen
     attributes:
       begin biedperiode:
@@ -83,8 +82,6 @@ classes:
           - vanwege
   Deelbehoefte:
     class_uri: Deelbehoefte
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     description: door een leveringsperiode afgebakend deel van een redispatchbehoefte
     slots:
       - begin levering
@@ -110,8 +107,6 @@ classes:
           - deel van
   Redispatch:
     class_uri: Redispatch
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     description: verplaatsing van energietransport door de gecombineerde afroep van één of meer biedingen redispatch
     attributes:
       identificatie:
@@ -133,8 +128,6 @@ classes:
           - identificatie
   Afroep van bieding redispatch:
     class_uri: Afroep-van-bieding-redispatch
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     description: opdracht om de geplande energie-uitwisseling aan te passen op basis van een bieding redispatch
     slots:
       - begin levering
@@ -162,8 +155,6 @@ classes:
           - inzet van
   Redispatchrestrictie:
     class_uri: Redispatchrestrictie
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     description: beperking op de inzet van redispatch
     slots:
       - beginmoment
@@ -223,8 +214,6 @@ classes:
           - onder
   Redispatchcapaciteit:
     class_uri: Redispatchcapaciteit
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     description: plicht om op verzoek biedingen redispatch te doen
     annotations:
       tijdlijn_geldigheid: true
@@ -278,8 +267,6 @@ classes:
   Redispatchcapaciteitsperiode:
     class_uri: Redispatchcapaciteitsperiode
     description: tijdsvenster waarbinnen de redispatchcapaciteit beschikbaar is
-    related_mappings:
-      - begrip:zjfey #bieding redispatch
     attributes:
       beginmaand:
         description: eerste kalendermaand waarin het venster van toepassing is
@@ -328,8 +315,6 @@ classes:
     class_uri: Redispatchdeelname
     see_also:
       - sce:hoofdstuk=9&paragraaf=9.2&artikel=9.17&g=2026-07-01
-    broad_mappings:
-      - begrip:zjfey #bieding redispatch
     description: registratie van deelname aan congestiebeheer
     annotations:
       tijdlijn_geldigheid: true
@@ -362,8 +347,6 @@ classes:
           - EAN-code
   Capaciteitssturingsdienst:
     class_uri: Capaciteitssturingsdienst
-    broad_mappings:
-      - begrip:39t96 #capaciteitsdienst
     description: dienst waarbij een aangeslotene of een groep van aangeslotenen zich tegenover de systeembeheerder verplicht om voor een afgesproken periode een minimale of maximale capaciteit af te nemen of in te voeden
     source: sce:bijlage=6&g=2026-10-01
     comments:
@@ -398,8 +381,6 @@ classes:
           - EAN-code
   Wijze van activering:
     class_uri: Wijze-van-activering
-    broad_mappings:
-      - begrip:39t96 #capaciteitsdienst
     description: vastgelegde methode waarmee een capaciteitsdienst wordt geactiveerd
     attributes:
       kanaal:
@@ -429,8 +410,6 @@ classes:
           - van
   Capaciteitssturingsdienst bij richting:
     class_uri: Capaciteitssturingsdienst-bij-richting
-    broad_mappings:
-      - begrip:39t96 #capaciteitsdienst
     description: voorwaarden van de capaciteitssturingsdienst specifiek voor opregelen óf afregelen
     slots:
       - richting
@@ -492,8 +471,6 @@ classes:
           - deel van
   Capaciteitssturingsperiode:
     class_uri: Capaciteitssturingsperiode
-    broad_mappings:
-      - begrip:39t96 #capaciteitsdienst
     description: tijdgebonden afspraak over capaciteitssturing
     attributes:
       leveringsregime:
@@ -554,8 +531,6 @@ classes:
           volgt_tijdlijn_geldigheid: true
   Afroep van variabele capaciteitssturing:
     class_uri: Afroep-van-variabele-capaciteitssturing
-    broad_mappings:
-      - begrip:39t96 #capaciteitsdienst
     description: opdracht om tijdelijk een overeengekomen transportcapaciteit toe te passen
     slots:
       - begin levering
@@ -630,8 +605,6 @@ classes:
           - op
   Wijze van vrijgave:
     class_uri: Wijze-van-vrijgave
-    broad_mappings:
-      - begrip:e8frg #transportvrijgave
     description: methode om de transportdienst vrij te geven op een aansluiting
     attributes:
       kanaal:

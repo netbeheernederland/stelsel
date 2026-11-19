@@ -32,6 +32,8 @@ annotations:
     - source_authority: Enexis
       represented_by: Product Owner Meetdata
       date: 2026-10-24
+related_mappings: # gebruik op registerniveau altijd related_mappings
+  - begrip:voorbeeld # map op het hoofdonderwerp van dit model
 
 # Overal kun je de volgende elementen gebruiken:
 # - mappings (exact_mappings, etc.): voor mappings op begrippen

@@ -25,13 +25,13 @@ annotations:
   changes: |
     - `Telwerk` heeft nu ook een relatie naar `Grootverbruikmeetinrichting`.
     - `meeteenheid` --> `meetsoort`.
+related_mappings:
+  - begrip:877a7 #meetinrichting
 
 classes:
   Grootverbruikmeetinrichting:
     class_uri: Grootverbruikmeetinrichting
     description: Meetinrichting bij een grootverbruikaansluiting
-    broad_mappings:
-      - begrip:877a7 #meetinrichting
     see_also:
       - iceg:hoofdstuk=4&paragraaf=4.7&sub-paragraaf=4.7.2&g=2025-01-01
     attributes:

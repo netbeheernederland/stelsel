@@ -65,7 +65,18 @@ for file_path in files:
     model_title = data.get('title', model_name)
     prefixes = data.get('prefixes', {})
 
-    # --- 1. CLASSES & ATTRIBUTEN ---
+    # --- MODEL ---
+    mappings = []
+    mappings.extend(data.get('exact_mappings', []))
+    mappings.extend(data.get('close_mappings', []))
+    mappings.extend(data.get('related_mappings', []))
+    mappings.extend(data.get('narrow_mappings', []))
+    mappings.extend(data.get('broad_mappings', []))
+    for m in mappings:
+        full_map_uri = expand_curie(m, prefixes)
+        add_usage(usages, full_map_uri, model_title, model_id, model_title, "model", None)
+
+    # --- CLASSES & ATTRIBUTEN ---
     for class_name, class_def in data.get('classes', {}).items():
         class_uri = get_full_uri(data, class_name, class_def, 'class_uri')
         
@@ -101,7 +112,7 @@ for file_path in files:
                     display_name = f"{class_name}: {attr_name}"
                     add_usage(usages, full_map_uri, model_title, model_id, display_name, "eigenschap", None)
 
-    # 2. SLOTS (losse definities van eigenschappen)
+    # SLOTS (losse definities van eigenschappen)
     for slot_name, slot_def in data.get('slots', {}).items():
         # Verzamel mappings
         mappings = []
@@ -115,7 +126,7 @@ for file_path in files:
             full_map_uri = expand_curie(m, prefixes)
             add_usage(usages, full_map_uri, model_title, model_id, slot_name, "eigenschap", None)
 
-    # 3. ENUMS (Lijsten)
+    # ENUMS (Lijsten)
     for enum_name, enum_def in data.get('enums', {}).items():
         # 3a. Mappings op de Enum zelf (de lijst als geheel)
         mappings = []

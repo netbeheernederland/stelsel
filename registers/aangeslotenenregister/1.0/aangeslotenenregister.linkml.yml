@@ -15,12 +15,12 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:m9e2q #aangeslotene
 
 classes:
   Aangeslotene:
     class_uri: Aangeslotene
-    exact_mappings:
-      - begrip:m9e2q #aangeslotene
     comments:
       - Omdat netbeheerders aangeslotenen niet altijd uniek kunnen identificeren, wordt in dit register informatie over de aangeslotene per aansluiting vastgelegd. Hierdoor kan één aangeslotene meerdere keren voorkomen in dit register.
       - Persoonsgegevens zijn zo veel mogelijk overeenkomstig NEN 1888. 
@@ -80,8 +80,6 @@ classes:
         - houder van
   Correspondentieadres:
     class_uri: Correspondentieadres
-    broad_mappings:
-      - begrip:m9e2q #aangeslotene
     description: postadres waar een aangeslotene zijn correspondentie wil ontvangen anders dan het aansluitadres
     comments:
       - Adresgegevens zijn zo veel mogelijk overeenkomstig NEN 5825.

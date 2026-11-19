@@ -20,12 +20,12 @@ annotations:
   changes: |
     - Bij elke `Marktpartijsubregistratie` niet minimaal 1 maar minimaal 0 `Contactlidmaatschappen` (herstelt een fout).
     - `afdrachtmethode` toegevoegd (naar aanleiding van tijdsafhankelijke transporttarieven).
+related_mappings:
+  - begrip:hc9px #marktpartij
 
 classes:
   Activiteitencategorie:
     class_uri: Activiteitencategorie
-    related_mappings:
-      - begrip:hc9px #marktpartij
     description: groepering van activiteiten op de energiemarkt, uitgedrukt als een combinatie van marktrol, productsoort, marktsegment en of er een erkenning is vereist
     slots:
       - energiedrager
@@ -63,8 +63,6 @@ classes:
           - vereist marktrolbeschikking
   Contactpersoon:
     class_uri: Contactpersoon
-    broad_mappings:
-      - begrip:hc9px #marktpartij
     description: persoon die namens een marktpartijregistratie verantwoordelijk is voor een of meer onderwerpen
     attributes:
       achternaam:
@@ -91,8 +89,6 @@ classes:
           - nummer
   Contactgroep:
     class_uri: Contactgroep
-    related_mappings:
-      - begrip:hc9px #marktpartij
     attributes:
       naam:
         description: identificatie van de contactgroep
@@ -114,8 +110,6 @@ classes:
           - naam
   Contactlidmaatschap:
     class_uri: Contactlidmaatschap
-    broad_mappings:
-      - begrip:hc9px #marktpartij
     attributes:
       # relaties:
       bij:
@@ -144,8 +138,6 @@ classes:
           - van
   Factuurcontact:
     class_uri: Factuurcontact
-    broad_mappings:
-      - begrip:hc9px #marktpartij
     description: contactgegevens die van toepassing zijn ten behoeve van het versturen van een factuur
     comments:
       - De overige adresgegevens bevinden zich in de registers van ondernemingen, zoals het Handelsregister.
@@ -174,8 +166,6 @@ classes:
           - van
   Marktpartijregistratie:
     class_uri: Marktpartijregistratie
-    broad_mappings:
-      - begrip:hc9px #marktpartij
     description: toewijzing van een bedrijfs-EAN-code aan een onderneming
     annotations:
       tijdlijn_geldigheid: true
@@ -220,8 +210,6 @@ classes:
           - bedrijfs-EAN-code
   Marktpartijsubregistratie:
     class_uri: Marktpartijsubregistratie
-    broad_mappings:
-      - begrip:hc9px #marktpartij
     description: onderverdeling van een marktpartijregistratie, waardoor gegevens voor die eenheid apart kunnen worden gegroepeerd
     see_also:
       - iceg:hoofdstuk=8&paragraaf=8.2&artikel=8.2.1&g=2025-01-01
@@ -270,8 +258,6 @@ classes:
           - naam
   Marktrolbeschikking:
     class_uri: Marktrolbeschikking
-    broad_mappings:
-      - begrip:hc9px #marktpartij
     description: officiële toestemming (ontheffing, vergunning of erkenning) aan een onderneming voor een bepaalde categorie van activiteiten op de Nederlandse energiemarkt
     attributes:
       intrekkingsdatum:
@@ -304,8 +290,6 @@ classes:
           - voor
   Preferentie:
     class_uri: Preferentie
-    broad_mappings:
-      - begrip:hc9px #marktpartij
     description: voorrang die is verleend door een programmaverantwoordelijke aan een leverancier of andersom en die van toepassing is tijdens een leveringszekerheidsprocedure
     slots:
       - energiedrager
@@ -334,8 +318,6 @@ classes:
           - verleend door
   Soort marktrolbeschikking:
     class_uri: Soort-marktrolbeschikking
-    related_mappings:
-      - begrip:hc9px #marktpartij
     description: aanduiding van een verzameling marktrolbeschikkingen die een gemeenschappelijk karakter hebben
     attributes:
       naam:

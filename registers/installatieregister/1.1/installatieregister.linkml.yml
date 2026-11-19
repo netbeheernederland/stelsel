@@ -29,6 +29,9 @@ annotations:
     - `verbruikseenheid`, `groep van verbruikselementen` zijn toegevoegd als entiteiten
     - `toegangelijkheidscategorie` attribuut is verplaatst naar `elektriceitsinstallatie-eenheid`
     - `GCvO-installatie` is aangepast naar `GvO-installatie` vanwege veranderde regelgeving
+related_mappings:
+  - begrip:gtj7b #installatie
+
 classes:
   Aanmelder:
     class_uri: Aanmelder
@@ -50,8 +53,6 @@ classes:
         description: uniek adres voor digitaal, elektronisch postverkeer
   Beveiligingsinstelling:
     class_uri: Beveiligingsinstelling
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: manier waarop door de elektriciteitsinstallatie-eenheid wordt beschermd tegen storingen
     attributes:
       onregelmatigheid:
@@ -85,8 +86,6 @@ classes:
           - onregelmatigheid
   Conformiteitscertificaat:
     class_uri: Conformiteitscertificaat
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: door een erkende certificerende instantie verstrekt document voor apparatuur die wordt gebruikt door een elektriciteitsproductie-eenheid, verbruikseenheid, distributiesysteem, verbruikersinstallatie of HVDC-systeem
     source: celex:32016R0631
     slots:
@@ -99,8 +98,6 @@ classes:
           - typeaanduiding
   Elektriciteitsinstallatie-eenheid:
     class_uri: Elektriciteitsinstallatie-eenheid
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: ondeelbaar geheel van elektrisch materieel en leidingen die samen elektrische energie kunnen verbruiken, opwekken, opslaan, laden of ontladen
     source: celex:32016R0631
     slots:
@@ -312,8 +309,6 @@ classes:
           inverse_cardinality: "1..*"
   GvO-installatie:
     class_uri: GvO-installatie
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: Installatie waarin energie wordt opgewekt met een garantie van oorsprong
     source: rgcvo:g=2026-09-02
     slots:
@@ -352,8 +347,6 @@ classes:
           - EAN-code
   Groep van omvormers:
     class_uri: Groep-van-omvormers
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: verzameling elektronische apparaten die de invoerspanning van een bepaalde spanning naar een andere spanning kunnen omvormen of elektrische energie in energie van een andere frequentie
     comments:
       - De ACM beschouwt een groep zonnepanelen achter één omvormer, samen met die omvormer als een elektriciteitsproductie-eenheid (ACM/18/033360). Aanmeldformulieren van netbeheerders staan echter meer omvormers per eenheid toe.
@@ -370,8 +363,6 @@ classes:
           inverse_cardinality: "*"
   Groep van opwekkingseenheden:
     class_uri: Groep-van-opwekkingseenheden
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: verzameling apparaten binnen één elektriciteitsproductie-eenheid die elektrische energie opwekken en identieke kenmerken delen
     slots:
       - fabrikant
@@ -430,8 +421,6 @@ classes:
           inverse_cardinality: "*"
   Soort transformator:
     class_uri: Soort-transformator
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: verzameling transformatoren die een gemeenschappelijk karakter hebben
     attributes:
       nominaal schijnbaar vermogen:
@@ -511,8 +500,6 @@ classes:
         range: Communicatieprotocol
   Groep van verbruikselementen:
     class_uri: Groep-van-verbruikselementen
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: verzameling apparaten binnen één verbruikseenheid die elektrische energie verbruiken en specifieke kenmerken delen
     slots:
       - fabrikant

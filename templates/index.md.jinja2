@@ -108,6 +108,15 @@
         {%- set _ = parts.items.append('⏲ geldigheidstijdlijn') -%}
     {%- endif -%}
 
+    {# onderwerp #}
+    {%- if element == schemaview.schema and element.related_mappings -%}
+        {%- set linked = [] -%}
+        {%- for m in element.related_mappings -%}
+            {%- set _ = linked.append(link(m)) -%}
+        {%- endfor -%}
+        {%- set _ = parts.items.append('Onderwerp: ' ~ linked | join(', ')) -%}
+    {%- endif -%}
+
     {# description #}
     {%- if element.description -%}
         {# source #}
@@ -124,31 +133,31 @@
     {%- endif -%}
 
     {# exact_mappings #}
-    {%- set exact_mappings = mappings_line(element, 'exact', 'Exact overeenkomstig') -%}
+    {%- set exact_mappings = mappings_line(element, 'exact', 'Exact overeenkomstig begrip') -%}
     {%- if exact_mappings -%}
         {%- set _ = parts.items.append(exact_mappings) -%}
     {%- endif -%}
 
     {# close_mappings #}
-    {%- set close_mappings = mappings_line(element, 'close', 'Vrijwel overeenkomstig') -%}
+    {%- set close_mappings = mappings_line(element, 'close', 'Vrijwel overeenkomstig begrip') -%}
     {%- if close_mappings -%}
         {%- set _ = parts.items.append(close_mappings) -%}
     {%- endif -%}
 
     {# related_mappings #}
-    {%- set related_mappings = mappings_line(element, 'related', 'Overeenkomstig verwant') -%}
+    {%- set related_mappings = mappings_line(element, 'related', 'Overeenkomstig verwant begrip') -%}
     {%- if related_mappings -%}
         {%- set _ = parts.items.append(related_mappings) -%}
     {%- endif -%}
 
     {# narrow_mappings #}
-    {%- set narrow_mappings = mappings_line(element, 'narrow', 'Overeenkomstig onderliggend') -%}
+    {%- set narrow_mappings = mappings_line(element, 'narrow', 'Overeenkomstig onderliggend begrip') -%}
     {%- if narrow_mappings -%}
         {%- set _ = parts.items.append(narrow_mappings) -%}
     {%- endif -%}
 
     {# broad_mappings #}
-    {%- set broad_mappings = mappings_line(element, 'broad', 'Overeenkomstig bovenliggend') -%}
+    {%- set broad_mappings = mappings_line(element, 'broad', 'Overeenkomstig bovenliggend begrip') -%}
     {%- if broad_mappings -%}
         {%- set _ = parts.items.append(broad_mappings) -%}
     {%- endif -%}
@@ -201,7 +210,7 @@ parent: "{{schema.title}}"
 
 ---
 
-## Entiteitend
+## Entiteiten
 {: .no_toc .text-delta }
 1. TOC
 {:toc}

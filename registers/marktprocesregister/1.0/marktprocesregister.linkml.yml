@@ -15,6 +15,8 @@ prefixes:
 default_prefix: this
 imports:
   - ../../basiswaardesoorten
+related_mappings:
+  - begrip:ihyma #marktactiviteit
 
 # Available date (van processtap/bericht) = effectueringsdatum (van deelproces)?
 # berichtidentificatie (voorheen 'technisch-berichtidentificatie') optioneel gemaakt: vanwege berichten die nog opgehaald moeten worden. Klopt?
@@ -145,7 +147,6 @@ imports:
 classes:
   Marktproces:
     class_uri: Marktproces
-    broad_mappings: begrip:ihyma #marktactiviteit
     description: samenhangende set activiteiten voor een mutatie op een object in de energiemarkt
     slots:
       - identificatie
@@ -184,7 +185,6 @@ classes:
           - identificatie
   Deelproces:
     class_uri: Deelproces
-    broad_mappings: begrip:ihyma #marktactiviteit
     description: samenhangende verzameling processtappen binnen een marktproces met een gemeenschappelijk doel
     slots:
       - identificatie
@@ -221,7 +221,6 @@ classes:
           - identificatie
   Processtap:
     class_uri: Bericht
-    broad_mappings: begrip:ihyma #marktactiviteit
     description: afgebakend deel van een marktproces dat door één marktpartij wordt uitgevoe/rd
     attributes:
       stapnummer:

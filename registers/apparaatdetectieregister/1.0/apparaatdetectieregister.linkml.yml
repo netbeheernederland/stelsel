@@ -13,12 +13,12 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:gtj7b #installatie
 
 classes: 
   Apparaatdetectie:
     class_uri: Apparaatdetectie
-    related_mappings:
-      - begrip:installatie
     description: vaststelling dat een of meer apparaten van een bepaalde soort waarschijnlijk aanwezig zijn achter het overdrachtspunt van een aansluiting gedurende een bepaalde periode
     attributes: 
       beginmoment:

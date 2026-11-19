@@ -14,12 +14,12 @@ default_prefix: this
 imports:
   - ../../basiswaardesoorten
 default_range: Tekst
+related_mappings:
+  - begrip:6m4pq #contractloze situatie
 
 classes:
   Adres:
     class_uri: Adres
-    broad_mappings:
-      - begrip:6m4pq #contractloze situatie
     description: aanduiding van een verblijfplaats of bestemming
     attributes:
       huisnummer:
@@ -54,8 +54,6 @@ classes:
           inverse_cardinality: "*"
   Betrokkene:
     class_uri: Betrokkene
-    broad_mappings:
-      - begrip:6m4pq #contractloze situatie
     description: rechthebbende op een onroerende zaak die onderwerp is van een bepaalde contractloze zaak
     see_also:
       - https://kadatawebservice.kadaster.nl/contractloos/swagger
@@ -199,8 +197,6 @@ classes:
         - begindatum
   Contractloze zaak:
     class_uri: Contractloze-zaak
-    broad_mappings:
-      - begrip:6m4pq #contractloze situatie
     description: afhandeling van één of meer contractloze situaties, waarvan kwaliteit en doorlooptijd bewaakt moeten worden
     comments:
       - Contractloze situaties worden typisch samengenomen onder één contractloze zaak als ze eenzelfde netbeheerder, aansluitlocatie en oorzaak hebben.

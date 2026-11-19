@@ -26,6 +26,8 @@ annotations:
   changes: |
     - `aanmelder` is toegevoegd als entiteit
     - `oost-west opstelling` is als eigenschap toegevoegd aan entiteit `Groep van opwekkingseenheden`
+related_mappings:
+  - begrip:gtj7b #installatie
 
 classes:
   Aanmelder:
@@ -62,8 +64,6 @@ classes:
         description: uniek adres voor digitaal, elektronisch postverkeer
   Beveiligingsinstelling:
     class_uri: Beveiligingsinstelling
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: manier waarop door de elektriciteitsinstallatie-eenheid wordt beschermd tegen storingen
     attributes:
       onregelmatigheid:
@@ -97,8 +97,6 @@ classes:
           - onregelmatigheid
   Conformiteitscertificaat:
     class_uri: Conformiteitscertificaat
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: door een erkende certificerende instantie verstrekt document voor apparatuur die wordt gebruikt door een elektriciteitsproductie-eenheid, verbruikseenheid, distributiesysteem, verbruikersinstallatie of HVDC-systeem
     source: celex:32016R0631
     slots:
@@ -111,8 +109,6 @@ classes:
           - typeaanduiding
   Elektriciteitsinstallatie-eenheid:
     class_uri: Elektriciteitsinstallatie-eenheid
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: ondeelbaar geheel van elektrisch materieel en leidingen die samen elektrische energie kunnen verbruiken, opwekken, opslaan, laden of ontladen
     source: celex:32016R0631
     slots:
@@ -270,8 +266,6 @@ classes:
           ucum_code: m
   GCvO-installatie:
     class_uri: GCvO-installatie
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: productie-installatie of een op grond van de criteria uit artikel 24 van de Regeling garanties van oorsprong en certificaten van oorsprong afgebakend deel daarvan, die of dat op grond van artikel 16, eerste lid, onderdeel h, van de Elektriciteitswet 1998, of artikel 10, vijfde lid, onderdeel c, van de Gaswet, wordt aangemerkt als een installatie voor de productie van energie als bedoeld in artikel 73, eerste lid van de Elektriciteitswet 1998, of artikel 66i, eerste lid van de Gaswet
     source: bce:g=2025-05-08
     see_also:
@@ -312,8 +306,6 @@ classes:
           - EAN-code
   Groep van omvormers:
     class_uri: Groep-van-omvormers
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: verzameling elektronische apparaten die de invoerspanning van een bepaalde spanning naar een andere spanning kunnen omvormen of elektrische energie in energie van een andere frequentie
     comments:
       - De ACM beschouwt een groep zonnepanelen achter één omvormer, samen met die omvormer als een elektriciteitsproductie-eenheid (ACM/18/033360). Aanmeldformulieren van netbeheerders staan echter meer omvormers per eenheid toe.
@@ -330,8 +322,6 @@ classes:
           inverse_cardinality: "*"
   Groep van opwekkingseenheden:
     class_uri: Groep-van-opwekkingseenheden
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: verzameling apparaten binnen één elektriciteitsproductie-eenheid die elektrische energie opwekken en identieke kenmerken delen
     slots:
       - fabrikant
@@ -390,8 +380,6 @@ classes:
           inverse_cardinality: "*"
   Soort transformator:
     class_uri: Soort-transformator
-    broad_mappings:
-      - begrip:gtj7b #installatie
     description: verzameling transformatoren die een gemeenschappelijk karakter hebben
     attributes:
       nominaal schijnbaar vermogen:
