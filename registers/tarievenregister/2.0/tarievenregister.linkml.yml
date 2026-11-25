@@ -37,8 +37,6 @@ classes:
         range: Decimaal getal
       # relaties:
       gewogen met:
-        comments:
-          - De `Tariefcategorie` van de `Wegingsfactor` moet gelijk zijn aan die van het gerelateerde `Systeemtarief`.
         range: Wegingsfactor
         required: true
         multivalued: false
